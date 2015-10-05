@@ -50,19 +50,22 @@ public class ServletUsuario extends HttpServlet {
 		boUsuario.doServletAction(dadosDenuncia, action);
 		*/
 		//O usuário apenas insere dados, não necessita receber o retorno do método.
-		/*
+		
 		String cpf = request.getParameter("cpf");
 		String tipo = request.getParameter("tipoProblema");
 		String endereco = request.getParameter("endereco");
 		String cep = request.getParameter("cep");
+		String complemento = request.getParameter("complemento");
 		
-		System.out.println(cpf+tipo+endereco+cep);
-		*/
-		System.out.println("Teste: "+request.getParameter("hello"));
+		System.out.println(cpf+"/n"+tipo+"/n"+endereco+"/n"+cep+"/n"+complemento+"/n");
+		
+		//Adicionar jar JSON para obter params passados em JSON pela app.
+		
+		//System.out.println("Teste: "+request.getParameter("hello"));
 		
 		response.setContentType("application/text");
 		response.setCharacterEncoding("UTF-8");
-		response.getWriter().write("Enviado");
+		response.getWriter().write("Enviado!");
 		
 		//request.getParameterMap() retorna um Map<String, String>
 	}
