@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.json.JSONObject;
+
 import br.com.lorencity.bo.BoUsuario;
 import br.com.lorencity.generators.ModelGenerator;
 import br.com.lorencity.modelo.DadosDenuncia;
@@ -42,15 +44,25 @@ public class ServletUsuario extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		
+		JSONObject jsonRequest = new JSONObject(request.getParameter("jsonParams"));
+		String action = request.getParameter("action");
 		/*
 		DadosDenuncia dadosDenuncia = ModelGenerator.preencherModelo(request);
-		String action = request.getParameter("action");
+		
 		
 		BoUsuario boUsuario = new BoUsuario();
 		boUsuario.doServletAction(dadosDenuncia, action);
 		*/
 		//O usuário apenas insere dados, não necessita receber o retorno do método.
 		
+		
+		System.out.println(action);
+		
+		System.out.println(jsonRequest);
+		
+		//System.out.println(jsonRequest.get("cpf"));
+		/*
 		String cpf = request.getParameter("cpf");
 		String tipo = request.getParameter("tipoProblema");
 		String endereco = request.getParameter("endereco");
@@ -58,7 +70,7 @@ public class ServletUsuario extends HttpServlet {
 		String complemento = request.getParameter("complemento");
 		
 		System.out.println(cpf+"/n"+tipo+"/n"+endereco+"/n"+cep+"/n"+complemento+"/n");
-		
+		*/
 		//Adicionar jar JSON para obter params passados em JSON pela app.
 		
 		//System.out.println("Teste: "+request.getParameter("hello"));
