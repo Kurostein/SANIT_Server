@@ -10,6 +10,7 @@ public class FileNameController {
 	private String filePath;
 	private String counterFileName = "nameCounterFile.txt";
 	private String defaultNameToGenerate = "SANIT_Img_";
+	private String fileExtension = ".jpeg";
 	
 	public FileNameController(){
 		
@@ -31,9 +32,13 @@ public class FileNameController {
 		this.defaultNameToGenerate = defaultNameToGenerate;
 	}
 	
+	public void setFileExtension(String fileExt){
+		this.fileExtension = fileExt;
+	}
+	
 	public String generateImgFileName(){
 		String fileName = this.defaultNameToGenerate
-				+ getLastCounterNumber() + ".jpeg";
+				+ getLastCounterNumber() + this.fileExtension;
 		
 		return fileName;
 	}
@@ -44,6 +49,7 @@ public class FileNameController {
 		
 		try {
 			lastImgNumber = readLastFileNumber(nameCounterFile);
+			writeNumberCount(nameCounterFile, Integer.parseInt(lastImgNumber));
 		} catch (FileNotFoundException e) {
 			lastImgNumber = getCounterFromDB();
 			createNameCounterFile(lastImgNumber);
@@ -58,6 +64,12 @@ public class FileNameController {
 		fileIn.close();
 		
 		return lastNumber;
+	}
+	
+	private void writeNumberCount(File counterFile, int actualCounter){
+		/**
+		 * apagar o texto atual e escrever o próximo.
+		 */
 	}
 	
 	private String getCounterFromDB(){
