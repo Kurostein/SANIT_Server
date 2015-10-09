@@ -6,20 +6,21 @@ public class BoUsuario {
 	//Recebe a ação requisitada ao servlet e a executa.
 		
 	private String action;
-	private DadosDenuncia denunciaApurada;
+	private DadosDenuncia dadosDenuncia;
+	private DadosDenuncia dadosTmp;
 	
 	public BoUsuario(){
 		this.action = null;
-		this.denunciaApurada = null;
+		this.dadosDenuncia = null;
 	}
 	
 	public DadosDenuncia doServletAction(DadosDenuncia dadosDenuncia, String action){	
-		this.denunciaApurada = dadosDenuncia;
+		this.dadosTmp = dadosDenuncia;
 		this.action = action;
 		
 		doAction(action);
 		
-		return this.denunciaApurada;
+		return this.dadosDenuncia;
 	}
 	
 	public void doAction(String Action){
