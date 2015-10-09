@@ -6,11 +6,13 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.Scanner;
 
 import org.apache.tomcat.util.codec.binary.Base64;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.json.JSONObject;
 
+import br.com.lorencity.controller.FileNameController;
 import br.com.lorencity.modelo.DadosDenuncia;
 import br.com.lorencity.modelo.Endereco;
 
@@ -56,15 +58,21 @@ public final class ModelPattern {
 	private static void preencherDirFoto(DadosDenuncia modelo, JSONObject jsonRequest){
 		System.out.println("Recuperando a imagem.");
 		
+		FileNameController fnc = new FileNameController();
+		
 		String base64Img = jsonRequest.getString("imagem");
 		File imgFile;
 		byte[] imageByteArray;
+		
+		fnc.setFilePath(ModelPattern.FILE_PATH);
 		
 		try{
 			imageByteArray = Base64.decodeBase64(base64Img);
 			isEmpty(imageByteArray);
 			
-			imgFile = new File(generateImgFileName());
+			
+			imgFile = new File(ModelPattern.FILE_PATH + fnc.generateImgFileName());
+			
 			writeImgToServerDir(imgFile, imageByteArray);
 			
 			modelo.setDirFoto(imgFile.getPath());
@@ -82,7 +90,10 @@ public final class ModelPattern {
 	
 	private static String generateImgFileName(){
 		final String fileNameDefault = "androidImg";
-		String fileName = ModelPattern.FILE_PATH+fileNameDefault+(ModelPattern.counter++)+".jpeg";
+		String fileName = ModelPattern.FILE_PATH
+				+fileNameDefault
+				+(ModelPattern.counter++)
+				+".jpeg";
 		
 		return fileName;
 	}
@@ -103,5 +114,39 @@ public final class ModelPattern {
 		if(byteArray == null){
 			throw new NullPointerException("Array imagem nulo.");
 		}
+	}
+	
+	private static String getNameCounterFile(){
+		File nameCounterFile = new File(ModelPattern.FILE_PATH+"nameCounterFile.txt");
+		String lastImgNumber;
+		
+		try {
+			lastImgNumber = readLastFileNumber(nameCounterFile);
+		} catch (FileNotFoundException e) {
+			lastImgNumber = getCounterFromDB();
+			createNameCounterFile(lastImgNumber);
+		}
+		
+		return lastImgNumber;
+	}
+	
+	private static String readLastFileNumber(File file) throws FileNotFoundException{
+		Scanner fileIn = new Scanner(file);
+		String lastNumber = fileIn.next();
+		fileIn.close();
+		return lastNumber;
+	}
+	
+	private static String getCounterFromDB(){
+		//Read DB image table to get the number of last image added.
+		String lastNumber;
+		
+		return lastNumber;
+	}
+	
+	private static void createNameCounterFile(String lastNumber){
+		//create a file in the class specified directory, writing the received String.
+		
+		
 	}
 }
