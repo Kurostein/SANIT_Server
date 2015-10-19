@@ -49,7 +49,7 @@ public class FileNameController {
 		
 		try {
 			lastImgNumber = readLastFileNumber(nameCounterFile);
-			writeNumberCount(nameCounterFile, Integer.parseInt(lastImgNumber));
+			writeNextNumberCount(nameCounterFile, Integer.parseInt(lastImgNumber));
 		} catch (FileNotFoundException e) {
 			lastImgNumber = getCounterFromDB();
 			createNameCounterFile(lastImgNumber);
@@ -66,7 +66,7 @@ public class FileNameController {
 		return lastNumber;
 	}
 	
-	private void writeNumberCount(File counterFile, int actualCounter){
+	private void writeNextNumberCount(File counterFile, int actualCounter){
 		/**
 		 * apagar o texto atual e escrever o próximo.
 		 */
@@ -74,10 +74,11 @@ public class FileNameController {
 	
 	private String getCounterFromDB(){
 		//Read DB image table to get the number of last image added.
-		String lastNumber;
+		String lastNumber = null;
 		
 		/**
-		 * Implementar conexão com o DB para ler o contador da última imagem.
+		 * Implementar conexão com o DB para ler o contador da última imagem e
+		 * retornar o próximo número da sequencia.
 		 */
 		
 		return lastNumber;

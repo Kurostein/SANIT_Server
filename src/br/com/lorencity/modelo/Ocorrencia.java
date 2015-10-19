@@ -1,10 +1,10 @@
 package br.com.lorencity.modelo;
 
-public class DadosDenuncia {
+public class Ocorrencia {
 	private Endereco endereco;
 	private String dirFoto;
 
-	public DadosDenuncia(){
+	public Ocorrencia(){
 		
 	}
 

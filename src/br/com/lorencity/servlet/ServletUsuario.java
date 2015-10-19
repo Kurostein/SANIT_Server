@@ -14,7 +14,7 @@ import org.json.JSONObject;
 
 import br.com.lorencity.bo.BoUsuario;
 import br.com.lorencity.generators.ModelPattern;
-import br.com.lorencity.modelo.DadosDenuncia;
+import br.com.lorencity.modelo.Ocorrencia;
 
 /**
  * Servlet implementation class ServletUsuario
@@ -56,16 +56,21 @@ public class ServletUsuario extends HttpServlet {
 		JSONObject jsonRequest = new JSONObject(jsonString);
 		String action = jsonRequest.getString("action");
 		
-		DadosDenuncia dadosDenuncia = ModelPattern.preencherModelo(jsonRequest);
-				
-		//BoUsuario boUsuario = new BoUsuario();
-		//boUsuario.doServletAction(dadosDenuncia, action);
+		//Get request stream ends.
 		
-		//O usuário apenas insere dados, não necessita receber o retorno do método.
-
-		response.setContentType("application/text");
+		Ocorrencia ocorrenciaModelo = null;
+		String responseString;
+		
+		if(action.equals("inserir") || action.equals("atualizar")){
+			ocorrenciaModelo = ModelPattern.preencherModelo(jsonRequest);
+		}
+		
+		BoUsuario boUsuario = new BoUsuario();
+		responseString = boUsuario.doServletAction(ocorrenciaModelo, action);
+		
+		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
-		response.getWriter().write("Enviado com sucesso!");
+		response.getWriter().write(responseString);
 		
 		System.out.println("Resposta enviada com sucesso.");
 	}

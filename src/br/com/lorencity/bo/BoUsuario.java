@@ -1,63 +1,70 @@
 package br.com.lorencity.bo;
 
-import br.com.lorencity.modelo.DadosDenuncia;
+import org.json.JSONArray;
+
+import br.com.lorencity.modelo.Ocorrencia;
 
 public class BoUsuario {
 	//Recebe a ação requisitada ao servlet e a executa.
 		
 	private String action;
-	private DadosDenuncia dadosDenuncia;
-	private DadosDenuncia dadosTmp;
+	private Ocorrencia ocorrenciaTmp;
 	
 	public BoUsuario(){
 		this.action = null;
-		this.dadosDenuncia = null;
+		this.ocorrenciaTmp = null;
 	}
 	
-	public DadosDenuncia doServletAction(DadosDenuncia dadosDenuncia, String action){	
-		this.dadosTmp = dadosDenuncia;
+	public String doServletAction(Ocorrencia ocorrenciaModelo, String action){	
+		this.ocorrenciaTmp = ocorrenciaModelo;
 		this.action = action;
 		
-		doAction(action);
-		
-		return this.dadosDenuncia;
+		return doAction(action);
 	}
 	
-	public void doAction(String Action){
+	public String doAction(String Action){
 		//Chama função de ação baseado na ação passada.
+		String response;
 		
 		switch (action) {
 		case "inserir":
-			inserirDados();
-			break;
+			response = inserirDados();
+			return response;
 		case "remover":
-			removerDados();
-			break;
+			response = removerDados();
+			return response;
 		case "atualizar":
-			atualizarDados();
-			break;
+			response = atualizarDados();
+			return response;
 		case "consultar":
-			consultarDados();
-			break;
+			response = consultarDados();
+			return response;
 			default:
-			break;
+			return "Filter Error";
 		}
 	}
-		private void consultarDados() {
-		// TODO Auto-generated method stub
+	
+	private String consultarDados() {
+		JSONArray tiposProblemas = new JSONArray();
+		tiposProblemas.put("Vazamento de água");
+		tiposProblemas.put("Vazamento de esgoto");
 		
+		String sJson = tiposProblemas.toString();
+		System.out.println(sJson);
+		
+		return sJson;
 	}
-		private void atualizarDados() {
-		// TODO Auto-generated method stub
-		
+	
+	private String atualizarDados() {
+		return "Não implementado";
 	}
-		private void removerDados() {
-		// TODO Auto-generated method stub
-		
+	
+	private String removerDados() {
+		return "Não implementado";
 	}
-		private void inserirDados() {
-		// TODO Auto-generated method stub
-		
+	
+	private String inserirDados() {
+		return "Sucesso";
 	}
 	
 }

@@ -12,7 +12,7 @@ import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.json.JSONObject;
 
 import br.com.lorencity.controller.FileNameController;
-import br.com.lorencity.modelo.DadosDenuncia;
+import br.com.lorencity.modelo.Ocorrencia;
 import br.com.lorencity.modelo.Endereco;
 
 public final class ModelPattern {
@@ -27,13 +27,13 @@ public final class ModelPattern {
 		
 	}
 	
-	public static DadosDenuncia preencherModelo(JSONObject jsonRequest) 
+	public static Ocorrencia preencherModelo(JSONObject jsonRequest) 
 			throws RuntimeException{
 		//Preenche o objeto modelo com os dados enviados do request, e o retorna.
 		
 		System.out.println("Criando modelo de dados.");
 		
-		DadosDenuncia modeloDados = new DadosDenuncia();
+		Ocorrencia modeloDados = new Ocorrencia();
 		
 		preencherCamposEndereco(modeloDados, jsonRequest);
 		preencherDirFoto(modeloDados, jsonRequest);
@@ -42,7 +42,7 @@ public final class ModelPattern {
 		return modeloDados;
 	}
 	
-	private static void preencherCamposEndereco(DadosDenuncia modelo, JSONObject jsonRequest){
+	private static void preencherCamposEndereco(Ocorrencia modelo, JSONObject jsonRequest){
 		Endereco endereco = new Endereco();
 		
 		System.out.println("Inserindo dados do endereço.");
@@ -54,7 +54,7 @@ public final class ModelPattern {
 		modelo.setEndereco(endereco);
 	}
 	
-	private static void preencherDirFoto(DadosDenuncia modelo, JSONObject jsonRequest) 
+	private static void preencherDirFoto(Ocorrencia modelo, JSONObject jsonRequest) 
 			throws RuntimeException{
 		
 		System.out.println("Recuperando a imagem.");
