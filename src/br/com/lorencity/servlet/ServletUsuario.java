@@ -13,7 +13,7 @@ import org.apache.commons.codec.binary.Base64;
 import org.json.JSONObject;
 
 import br.com.lorencity.bo.BoUsuario;
-import br.com.lorencity.generators.ModelPattern;
+import br.com.lorencity.generators.ModelFormat;
 import br.com.lorencity.modelo.Ocorrencia;
 
 /**
@@ -58,15 +58,23 @@ public class ServletUsuario extends HttpServlet {
 		
 		//Get request stream ends.
 		
-		Ocorrencia ocorrenciaModelo = null;
+		Ocorrencia ocorrencia = null;
 		String responseString;
 		
-		if(action.equals("inserir") || action.equals("atualizar")){
-			ocorrenciaModelo = ModelPattern.preencherModelo(jsonRequest);
+		try{
+			if(action.equals("inserir")){
+				ocorrencia = new Ocorrencia();
+				ocorrencia.setEndereco(ModelFormat.preencherEndereco(jsonRequest));
+				ocorrencia.setTipoProblema(jsonRequest.getString("tipoProblema"));
+				ocorrencia.setDirFoto(ModelFormat.gravarImgFile(jsonRequest));
+			}
+			
+			BoUsuario boUsuario = new BoUsuario();
+			responseString = boUsuario.doServletAction(ocorrencia, action);
+			
+		}catch(RuntimeException e){
+			responseString = e.getMessage();
 		}
-		
-		BoUsuario boUsuario = new BoUsuario();
-		responseString = boUsuario.doServletAction(ocorrenciaModelo, action);
 		
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");

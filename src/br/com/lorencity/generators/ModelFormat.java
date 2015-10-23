@@ -11,38 +11,17 @@ import org.apache.tomcat.util.codec.binary.Base64;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.json.JSONObject;
 
-import br.com.lorencity.controller.FileNameController;
-import br.com.lorencity.modelo.Ocorrencia;
 import br.com.lorencity.modelo.Endereco;
 
-public final class ModelPattern {
-	/*
-	 * Recebe o JSONObject request, obtém o endereço da imagem no diretório do 
-	 * servidor e retorna o objeto modelo preenchido. 
-	 */
+public final class ModelFormat {
 	
-	private static final String FILE_PATH = "C:/SANIT Project/media/images/";
+	private static final String IMG_FILE_PATH = "C:/SANIT Project/media/images/";
 	
-	private ModelPattern(){
+	private ModelFormat(){
 		
 	}
-	
-	public static Ocorrencia preencherModelo(JSONObject jsonRequest) 
-			throws RuntimeException{
-		//Preenche o objeto modelo com os dados enviados do request, e o retorna.
-		
-		System.out.println("Criando modelo de dados.");
-		
-		Ocorrencia modeloDados = new Ocorrencia();
-		
-		preencherCamposEndereco(modeloDados, jsonRequest);
-		preencherDirFoto(modeloDados, jsonRequest);
 
-		System.out.println("Modelo criado e preenchido.");
-		return modeloDados;
-	}
-	
-	private static void preencherCamposEndereco(Ocorrencia modelo, JSONObject jsonRequest){
+	public static Endereco preencherEndereco(JSONObject jsonRequest){
 		Endereco endereco = new Endereco();
 		
 		System.out.println("Inserindo dados do endereço.");
@@ -50,33 +29,37 @@ public final class ModelPattern {
 		endereco.setNumero(Integer.parseInt(jsonRequest.getString("numero")));
 		endereco.setBairro(jsonRequest.getString("bairro"));
 		endereco.setComplemento(jsonRequest.getString("complemento"));
+		endereco.setCep(jsonRequest.getString("cep"));
 		
-		modelo.setEndereco(endereco);
+		return endereco;
 	}
 	
-	private static void preencherDirFoto(Ocorrencia modelo, JSONObject jsonRequest) 
-			throws RuntimeException{
+	public static String gravarImgFile(JSONObject jsonRequest) throws RuntimeException{
+		/*
+		 * Converve a imagem de String Base64, salva em um arquivo e retorna
+		 * o endereço em que foi salvo.
+		 */
 		
-		System.out.println("Recuperando a imagem.");
-				
 		String base64Img = jsonRequest.getString("imagem");
+		String imgFilePath;
 		File imgFile;
 		byte[] imageByteArray;
 		
-		FileNameController fnc = new FileNameController();
-		fnc.setFilePath(ModelPattern.FILE_PATH);
+		FileNameGenerator fng = new FileNameGenerator();
 		
 		try{
+			System.out.println("Recuperando a imagem.");
+			
 			imageByteArray = Base64.decodeBase64(base64Img);
 			isArrayEmpty(imageByteArray);
 			
-			imgFile = new File(ModelPattern.FILE_PATH + fnc.generateImgFileName());
+			imgFile = new File(ModelFormat.IMG_FILE_PATH + fng.generateImgFileName());
 			
 			writeImgToServerDir(imgFile, imageByteArray);
 			
-			modelo.setDirFoto(imgFile.getPath());
+			imgFilePath = imgFile.getPath();
 			
-			System.out.println("Imagem salva em: "+modelo.getDirFoto());
+			System.out.println("Imagem salva em: "+imgFilePath);
 			
 		}catch(IOException e){
 			System.err.println("Erro de conversão ou escrita da imagem.");
@@ -85,6 +68,8 @@ public final class ModelPattern {
 			System.err.println("Erro na conversão da imagem, Array null.");
 			throw new RuntimeException("Erro na conversão da imagem.", e);
 		}
+		
+		return imgFilePath;
 	}
 	
 	private static void writeImgToServerDir(File imgFile, byte[] imageByteArray)

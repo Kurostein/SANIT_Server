@@ -1,34 +1,26 @@
 package br.com.lorencity.bo;
 
+import java.sql.SQLException;
+
 import org.json.JSONArray;
 
+import br.com.lorencity.dao.UsuarioDAO;
 import br.com.lorencity.modelo.Ocorrencia;
 
 public class BoUsuario {
 	//Recebe a ação requisitada ao servlet e a executa.
-		
-	private String action;
-	private Ocorrencia ocorrenciaTmp;
-	
+
 	public BoUsuario(){
-		this.action = null;
-		this.ocorrenciaTmp = null;
+
 	}
 	
-	public String doServletAction(Ocorrencia ocorrenciaModelo, String action){	
-		this.ocorrenciaTmp = ocorrenciaModelo;
-		this.action = action;
+	public String doServletAction(Ocorrencia ocorrencia, String action){	
 		
-		return doAction(action);
-	}
-	
-	public String doAction(String Action){
-		//Chama função de ação baseado na ação passada.
 		String response;
 		
 		switch (action) {
 		case "inserir":
-			response = inserirDados();
+			response = inserirDados(ocorrencia);
 			return response;
 		case "remover":
 			response = removerDados();
@@ -36,23 +28,43 @@ public class BoUsuario {
 		case "atualizar":
 			response = atualizarDados();
 			return response;
-		case "consultar":
-			response = consultarDados();
+		case "consultarProblemas":
+			response = consultarTiposProblemas();
 			return response;
 			default:
 			return "Filter Error";
 		}
 	}
 	
-	private String consultarDados() {
+	private String consultarTiposProblemas() {
 		JSONArray tiposProblemas = new JSONArray();
 		tiposProblemas.put("Vazamento de água");
 		tiposProblemas.put("Vazamento de esgoto");
-		
+		/*
+		try{
+			UsuarioDAO usuarioDAO = new UsuarioDAO();
+			tiposProblemas = usuarioDAO.getListaProblemas();
+		}catch(SQLException e){
+			System.err.println("Problema na conexão com o banco.");
+			throw new RuntimeException("Problema na conexão com o banco.", e);
+		}
+		 */
 		String sJson = tiposProblemas.toString();
 		System.out.println(sJson);
 		
 		return sJson;
+	}
+	
+	private String inserirDados(Ocorrencia ocorrencia) {
+		try{
+			UsuarioDAO usuarioDAO = new UsuarioDAO();
+			usuarioDAO.inserir(ocorrencia);
+		}catch(SQLException e){
+			System.err.println("Problema na conexão com o banco.");
+			throw new RuntimeException("Problema na conexão com o banco.", e);
+		}
+		
+		return "Ocorrência adicionada com sucesso.";
 	}
 	
 	private String atualizarDados() {
@@ -63,9 +75,4 @@ public class BoUsuario {
 		return "Não implementado";
 	}
 	
-	private String inserirDados() {
-		return "Sucesso";
-	}
-	
 }
-
