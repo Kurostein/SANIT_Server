@@ -54,7 +54,7 @@ public class UsuarioDAO {
 		
 		while(rs.next()){
 			jsonArray.put(rs.getString("nome"));
-		}
+		} //trocar o domínio "nome" para "descrição" no banco de dados!
 		
 		return jsonArray;
 	}

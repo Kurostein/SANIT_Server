@@ -1,22 +1,20 @@
 package br.com.lorencity.modelo;
 
-import java.util.Date;
 
 public class Ocorrencia {
 	private Endereco endereco;
-	private String tipoProblema;
+	private TipoProblema tipoProblema;
 	private String dirFoto;
-	private Date dataCriacao;
 
 	public Ocorrencia(){
 		
 	}
 	
-	public String getTipoProblema() {
+	public TipoProblema getTipoProblema() {
 		return tipoProblema;
 	}
 
-	public void setTipoProblema(String tipoProblema) {
+	public void setTipoProblema(TipoProblema tipoProblema) {
 		this.tipoProblema = tipoProblema;
 	}
 
@@ -35,12 +33,5 @@ public class Ocorrencia {
 	public void setDirFoto(String dirFoto) {
 		this.dirFoto = dirFoto.trim();
 	}
-	
-	public Date getDataCriacao(){
-		return this.dataCriacao;
-	}
-	
-	public void setDataCriacao(){
-		this.dataCriacao = new Date();
-	}
+
 }
