@@ -3,18 +3,18 @@ package br.com.lorencity.modelo;
 
 public class Ocorrencia {
 	private Endereco endereco;
-	private TipoProblema tipoProblema;
+	private String tipoProblema;
 	private String dirFoto;
 
 	public Ocorrencia(){
 		
 	}
 	
-	public TipoProblema getTipoProblema() {
-		return tipoProblema;
+	public String getTipoProblema() {
+		return this.tipoProblema;
 	}
 
-	public void setTipoProblema(TipoProblema tipoProblema) {
+	public void setTipoProblema(String tipoProblema) {
 		this.tipoProblema = tipoProblema;
 	}
 

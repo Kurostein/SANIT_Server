@@ -31,6 +31,9 @@ public class BoUsuario {
 		case "consultarProblemas":
 			response = consultarTiposProblemas();
 			return response;
+		case "consultarBairros":
+			response = consultarBairros();
+			return response;
 			default:
 			return "Filter Error";
 		}
@@ -38,9 +41,9 @@ public class BoUsuario {
 	
 	private String consultarTiposProblemas() {
 		JSONArray tiposProblemas = new JSONArray();
-		tiposProblemas.put("Vazamento de água");
-		tiposProblemas.put("Vazamento de esgoto");
-		/*
+		//tiposProblemas.put("Vazamento de água");
+		//tiposProblemas.put("Vazamento de esgoto");
+		
 		try{
 			UsuarioDAO usuarioDAO = new UsuarioDAO();
 			tiposProblemas = usuarioDAO.getListaProblemas();
@@ -48,8 +51,25 @@ public class BoUsuario {
 			System.err.println("Problema na conexão com o banco.");
 			throw new RuntimeException("Problema na conexão com o banco.", e);
 		}
-		 */
+		
 		String sJson = tiposProblemas.toString();
+		System.out.println(sJson);
+		
+		return sJson;
+	}
+	
+	private String consultarBairros() {
+		JSONArray bairros = new JSONArray();
+
+		try{
+			UsuarioDAO usuarioDAO = new UsuarioDAO();
+			bairros = usuarioDAO.getListaBairros();
+		}catch(SQLException e){
+			System.err.println("Problema na conexão com o banco.");
+			throw new RuntimeException("Problema na conexão com o banco.", e);
+		}
+		
+		String sJson = bairros.toString();
 		System.out.println(sJson);
 		
 		return sJson;

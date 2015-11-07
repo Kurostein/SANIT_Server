@@ -47,6 +47,8 @@ public class ServletUsuario extends HttpServlet {
 		
 		System.out.println("Request recebida com sucesso.");
 		
+		//Get request stream
+		
 		DataInputStream din = new DataInputStream(request.getInputStream());
 		String base64Json = din.readUTF();
 		

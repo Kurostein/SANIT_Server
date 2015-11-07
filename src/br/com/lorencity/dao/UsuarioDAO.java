@@ -45,7 +45,7 @@ public class UsuarioDAO {
 	
 	public JSONArray getListaProblemas() throws SQLException{
 		JSONArray jsonArray;
-		String sql = "SELECT * FROM Problemas;";
+		String sql = "SELECT tipo_problema FROM problemas;";
 		
 		PreparedStatement stmt = conn.prepareStatement(sql);
 		ResultSet rs = stmt.executeQuery();
@@ -53,8 +53,24 @@ public class UsuarioDAO {
 		jsonArray = new JSONArray();
 		
 		while(rs.next()){
-			jsonArray.put(rs.getString("nome"));
-		} //trocar o domínio "nome" para "descrição" no banco de dados!
+			jsonArray.put(rs.getString("tipo_problema"));
+		}
+		
+		return jsonArray;
+	}
+	
+	public JSONArray getListaBairros() throws SQLException{
+		JSONArray jsonArray;
+		String sql = "SELECT bairro FROM bairros;";
+		
+		PreparedStatement stmt = conn.prepareStatement(sql);
+		ResultSet rs = stmt.executeQuery();
+		
+		jsonArray = new JSONArray();
+		
+		while(rs.next()){
+			jsonArray.put(rs.getString("bairro"));
+		}
 		
 		return jsonArray;
 	}
