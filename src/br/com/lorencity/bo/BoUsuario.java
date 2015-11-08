@@ -2,6 +2,8 @@ package br.com.lorencity.bo;
 
 import java.sql.SQLException;
 
+import javax.naming.NamingException;
+
 import org.json.JSONArray;
 
 import br.com.lorencity.dao.UsuarioDAO;
@@ -46,6 +48,11 @@ public class BoUsuario {
 			UsuarioDAO usuarioDAO = new UsuarioDAO();
 			tiposProblemas = usuarioDAO.getListaProblemas();
 		}catch(SQLException e){
+			e.printStackTrace();
+			System.err.println("Problema na conexão com o banco.");
+			throw new RuntimeException("Problema na conexão com o banco.", e);
+		}catch (NamingException e) {
+			e.printStackTrace();
 			System.err.println("Problema na conexão com o banco.");
 			throw new RuntimeException("Problema na conexão com o banco.", e);
 		}
@@ -65,6 +72,10 @@ public class BoUsuario {
 		}catch(SQLException e){
 			System.err.println("Problema na conexão com o banco.");
 			throw new RuntimeException("Problema na conexão com o banco.", e);
+		}catch (NamingException e) {
+			e.printStackTrace();
+			System.err.println("Problema na conexão com o banco.");
+			throw new RuntimeException("Problema na conexão com o banco.", e);
 		}
 		
 		String sJson = bairros.toString();
@@ -78,6 +89,10 @@ public class BoUsuario {
 			UsuarioDAO usuarioDAO = new UsuarioDAO();
 			usuarioDAO.inserir(ocorrencia);
 		}catch(SQLException e){
+			System.err.println("Problema na conexão com o banco.");
+			throw new RuntimeException("Problema na conexão com o banco.", e);
+		}catch (NamingException e) {
+			e.printStackTrace();
 			System.err.println("Problema na conexão com o banco.");
 			throw new RuntimeException("Problema na conexão com o banco.", e);
 		}

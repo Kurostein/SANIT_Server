@@ -58,6 +58,7 @@ public class ServletUsuario extends HttpServlet {
 		JSONObject jsonRequest = new JSONObject(jsonString);
 		String action = jsonRequest.getString("action");
 		
+		System.out.println(jsonRequest);
 		//Get request stream ends.
 		
 		Ocorrencia ocorrencia = null;
