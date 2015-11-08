@@ -57,7 +57,7 @@ public final class ModelFormat {
 			
 			writeImgToServerDir(imgFile, imageByteArray);
 			
-			imgFilePath = imgFile.getPath();
+			imgFilePath = filePathFormat(imgFile.getPath());
 			
 			System.out.println("Imagem salva em: "+imgFilePath);
 			
@@ -90,4 +90,9 @@ public final class ModelFormat {
 		}
 	}
 	
+	private static String filePathFormat(String path){
+		String formatedPath;
+		formatedPath = path.replaceAll("/", "//");
+		return formatedPath;
+	}
 }

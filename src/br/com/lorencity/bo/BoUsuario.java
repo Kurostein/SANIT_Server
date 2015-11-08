@@ -41,8 +41,6 @@ public class BoUsuario {
 	
 	private String consultarTiposProblemas() {
 		JSONArray tiposProblemas = new JSONArray();
-		//tiposProblemas.put("Vazamento de água");
-		//tiposProblemas.put("Vazamento de esgoto");
 		
 		try{
 			UsuarioDAO usuarioDAO = new UsuarioDAO();

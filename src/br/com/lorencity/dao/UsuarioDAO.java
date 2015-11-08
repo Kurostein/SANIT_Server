@@ -14,21 +14,26 @@ public class UsuarioDAO {
 	
 	private Connection conn;
 	private String dbName = "mysql";
-	private String dbUser = "sanit";
-	private String dbPass = "sanitserver";
+	private String dbUser = "root";
+	private String dbPass = "darknight";
 	
 	public UsuarioDAO() throws SQLException{
-		this.conn = ConnectionFactory.getConnection(this.dbName,
-				this.dbUser, this.dbPass);
+		this.conn = ConnectionFactory.getConnection(this.dbName, this.dbUser, this.dbPass);
 	}
 	
 	public void inserir(Ocorrencia ocorrencia) throws SQLException{
-		String sql = "INSERT INTO Ocorrencia" +
-						"(logradouro, numero, cod_bairro, complemento, cep" +
-						"latitude, longitude, cod_problema, cod_anexo, " +
-						"confirmado, data_criacao, data_atualizacao)" +
-						"VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
-		
+		String sql = "INSERT INTO ocorrencias "
+				+ "(logradouro, numero, id_bairro, complemento, cep, id_problema, id_anexo, "
+				+ "data_criacao, data_atualizacao) "
+				+ "VALUES "
+				+ "(?, ?, "
+				+ "(SELECT id_bairro FROM bairros WHERE bairro = ?), "
+				+ "?, ?, "
+				+ "(SELECT id_problema FROM problemas WHERE tipo_problema = ?), "
+				+ "(SELECT id_anexo FROM anexos WHERE caminho_anexo = ?), "
+				+ "CURDATE(), "
+				+ "CURDATE());";
+
 		PreparedStatement stmt = conn.prepareStatement(sql);
 		stmt.setString(1, ocorrencia.getEndereco().getLogradouro());
 		stmt.setInt(2, ocorrencia.getEndereco().getNumero());
@@ -39,8 +44,6 @@ public class UsuarioDAO {
 		//stmt.setString(7, ocorrencia.getEndereco().getLongitude());
 		stmt.setString(8, ocorrencia.getTipoProblema());
 		stmt.setString(9, ocorrencia.getDirFoto());
-		stmt.setString(10, null);
-		//stmt.setString(11, ocorrencia.getDataCriacao());
 	}
 	
 	public JSONArray getListaProblemas() throws SQLException{

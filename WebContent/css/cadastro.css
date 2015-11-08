@@ -1,0 +1,161 @@
+@CHARSET "ISO-8859-1";
+
+
+body{
+	background-image: url("../imagens/background.jpg");
+	background-repeat: no-repeat;
+	background-size:100%;
+	font-family: sans-serif;
+    font-size: 1em;
+}
+
+div.cabecalho{
+	position: absolute;
+	position: center;
+	top: 1px;
+	left: 400px;
+}
+
+
+div.formulario{
+	position:relative;
+	top:220px;
+}
+
+div.campo1{
+	position:absolute;
+	top:15px;
+	left:0px;
+	
+}
+
+div.campo2{
+	position:absolute;
+	top:15px;
+	left:500px;
+}
+
+div.campo3{
+	position:absolute;
+	top:55px;
+}
+
+div.campo4{
+	position:absolute;
+	top:120px;
+}
+
+div.campo5{
+	position:absolute;
+	top:120px;
+	left:450px;
+}
+
+div.campo6{
+	position:absolute;
+	top:170px;
+	left:50px;
+}
+
+div.campo7{
+	position:absolute;
+	top:170px;
+	left:450px;
+}
+
+div.campo8{
+	position:absolute;
+	top:200px;
+	
+}
+
+div.pesquisa{
+	position:relative;
+	top:210px;
+	left:40px;
+}
+
+label.problema{
+	
+}
+
+label.codigo{
+	position:absolute;
+	right:310px;
+}
+
+input#problema{
+	width:300px;
+	height:18px;
+	border-radius: 4px 4px 0 0;
+    box-shadow:5px 5px 3px black;
+}
+
+input#codigo{
+	width:300px;
+	height:20px;
+	border-radius: 4px 4px 0 0;
+    box-shadow:5px 5px 3px black;
+}
+
+input#data{
+	height:20px;
+	border-radius: 4px 4px 0 0;
+    box-shadow:5px 5px 3px black;
+}
+
+input#idFuncionario{
+	height:20px;
+	width:265px;
+	border-radius: 4px 4px 0 0;
+    box-shadow:5px 5px 3px black;
+}
+
+input#cidade{
+	height:20px;
+	width:265px;
+	border-radius: 4px 4px 0 0;
+    box-shadow:5px 5px 3px black;
+}
+
+input.botao1{
+	position:absolute;
+	top:80px;
+	left:50px;
+	border-style: ridge;
+	border-width: 5px;
+	border-radius: 30px;	
+}
+
+input.botao2{
+	position:absolute;
+	top:80px;
+	left:180px;
+	border-style: ridge;
+	border-width: 5px;
+	border-radius: 30px;	
+}
+
+input.alterar{
+	border-style: ridge;
+	border-width: 5px;
+	border-radius: 30px;	
+}
+
+input.deletar{
+	border-style: ridge;
+	border-width: 5px;
+	border-radius: 30px;	
+}
+
+
+textarea#mensagem{
+	border-radius: 4px 4px 0 0;
+    box-shadow:5px 5px 3px black;
+}
+
+table.tabela{
+	position:relative;
+	top:300px;
+	left:40px;
+}

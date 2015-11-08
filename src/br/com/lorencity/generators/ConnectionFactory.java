@@ -15,9 +15,9 @@ public class ConnectionFactory {
 	}
 	
 	private static Connection getMySQLConnection(String user, String password) throws SQLException{
-		String url = "jdbc:mysql://ce-mysql-sanit.c99gmmgff5ac.sa-east-1.rds.amazonaws.com:3306/sanitdb";
+		String url = "jdbc:mysql://localhost:3306/sanit";
 		Connection con = DriverManager.getConnection(url, user, password);		
-		System.out.println("Conectado ao DB!");
+		System.out.println("Conectado ao database!");
 		return con;
 	}
 }
