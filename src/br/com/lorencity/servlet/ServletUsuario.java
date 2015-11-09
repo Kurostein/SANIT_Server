@@ -1,6 +1,5 @@
 package br.com.lorencity.servlet;
 
-import java.io.DataInputStream;
 import java.io.IOException;
 
 import javax.servlet.ServletException;
@@ -9,11 +8,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.codec.binary.Base64;
 import org.json.JSONObject;
 
 import br.com.lorencity.bo.BoUsuario;
-import br.com.lorencity.generators.ModelFormat;
+import br.com.lorencity.modelo.Endereco;
 import br.com.lorencity.modelo.Ocorrencia;
 
 /**
@@ -47,29 +45,18 @@ public class ServletUsuario extends HttpServlet {
 		
 		System.out.println("Request recebida com sucesso.");
 		
-		//Get request stream
-		
-		DataInputStream din = new DataInputStream(request.getInputStream());
-		String base64Json = din.readUTF();
-		
-		byte[] jsonByteArray = Base64.decodeBase64(base64Json);
-		String jsonString = new String(jsonByteArray);
-		
-		JSONObject jsonRequest = new JSONObject(jsonString);
+		JSONObject jsonRequest = new JSONObject(request.getParameter("params"));
 		String action = jsonRequest.getString("action");
-		
-		System.out.println(jsonRequest);
-		//Get request stream ends.
-		
+				
 		Ocorrencia ocorrencia = null;
 		String responseString;
 		
 		try{
 			if(action.equals("inserir")){
 				ocorrencia = new Ocorrencia();
-				ocorrencia.setEndereco(ModelFormat.preencherEndereco(jsonRequest));
+				ocorrencia.setEndereco(Endereco.preencherEndereco(jsonRequest));
 				ocorrencia.setTipoProblema(jsonRequest.getString("tipoProblema"));
-				ocorrencia.setDirFoto(ModelFormat.gravarImgFile(jsonRequest));
+				ocorrencia.setImagePath(jsonRequest.getString("imagem"));
 			}
 			
 			BoUsuario boUsuario = new BoUsuario();
@@ -77,6 +64,7 @@ public class ServletUsuario extends HttpServlet {
 			
 		}catch(RuntimeException e){
 			responseString = e.getMessage();
+			e.printStackTrace();
 		}
 		
 		response.setContentType("application/json");

@@ -39,7 +39,7 @@ public class UsuarioDAO {
 				+ "'" + ocorrencia.getEndereco().getComplemento() + "', "
 				+ "'" + ocorrencia.getEndereco().getCep() + "', "
 				+ "(SELECT id_problema FROM problemas WHERE tipo_problema = '" + ocorrencia.getTipoProblema() + "'), "
-				+ "(SELECT id_anexo FROM anexos WHERE caminho_anexo = '" + ocorrencia.getDirFoto() + "'), "
+				+ "(SELECT id_anexo FROM anexos WHERE caminho_anexo = '" + ocorrencia.getImagePath() + "'), "
 				+ "CURDATE(), "
 				+ "CURDATE());";
 		

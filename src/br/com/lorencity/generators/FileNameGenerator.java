@@ -8,7 +8,7 @@ import java.util.Date;
 
 public class FileNameGenerator {
 	
-	private String defaultNameToGenerate = "SANIT_Img_";
+	private String defaultName = "SANIT_Img_";
 	private String fileExtension = ".jpeg";
 	
 	public FileNameGenerator(){
@@ -16,7 +16,7 @@ public class FileNameGenerator {
 	}
 	
 	public void setDefaultFileName(String defaultNameToGenerate){
-		this.defaultNameToGenerate = defaultNameToGenerate;
+		this.defaultName = defaultNameToGenerate;
 	}
 	
 	public void setFileExtension(String fileExt){
@@ -24,9 +24,7 @@ public class FileNameGenerator {
 	}
 	
 	public String generateImgFileName(){
-		String fileName = this.defaultNameToGenerate
-				+ getCurrentTimestamp() + this.fileExtension;
-		
+		String fileName = this.defaultName + getCurrentTimestamp() + this.fileExtension;
 		return fileName;
 	}
 	

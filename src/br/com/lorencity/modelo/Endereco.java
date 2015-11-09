@@ -1,5 +1,7 @@
 package br.com.lorencity.modelo;
 
+import org.json.JSONObject;
+
 public class Endereco {
 	private String logradouro;
 	private int numero;
@@ -51,5 +53,17 @@ public class Endereco {
 		this.complemento = complemento.trim();
 	}
 	
-	
+	public static Endereco preencherEndereco(JSONObject jsonRequest){
+		Endereco endereco = new Endereco();
+		
+		System.out.println("Inserindo dados do endereço.");
+		
+		endereco.setLogradouro(jsonRequest.getString("logradouro"));
+		endereco.setNumero(Integer.parseInt(jsonRequest.getString("numero")));
+		endereco.setBairro(jsonRequest.getString("bairro"));
+		endereco.setComplemento(jsonRequest.getString("complemento"));
+		endereco.setCep(jsonRequest.getString("cep"));
+		
+		return endereco;
+	}
 }

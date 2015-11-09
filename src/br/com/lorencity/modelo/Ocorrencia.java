@@ -4,7 +4,7 @@ package br.com.lorencity.modelo;
 public class Ocorrencia {
 	private Endereco endereco;
 	private String tipoProblema;
-	private String dirFoto;
+	private String imagePath;
 
 	public Ocorrencia(){
 		
@@ -26,12 +26,12 @@ public class Ocorrencia {
 		this.endereco = endereco;
 	}
 
-	public String getDirFoto() {
-		return dirFoto;
+	public String getImagePath() {
+		return imagePath;
 	}
 
-	public void setDirFoto(String dirFoto) {
-		this.dirFoto = dirFoto.trim();
+	public void setImagePath(String imagePath) {
+		this.imagePath = imagePath.trim();
 	}
 
 }
