@@ -5,6 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -13,13 +15,11 @@ import javax.sql.DataSource;
 
 import org.json.JSONArray;
 
-import br.com.lorencity.modelo.Ocorrencia;
+public class BairrosDAO {
 
-public class UsuarioDAO {
-	
 	private Connection conn;
 	
-	public UsuarioDAO() throws NamingException, SQLException{
+	public BairrosDAO() throws SQLException, NamingException{
 		Context initContext = new InitialContext();
 		Context envContext = (Context) initContext.lookup("java:comp/env");
 		DataSource ds = (DataSource) envContext.lookup("jdbc/sanit");
@@ -28,50 +28,55 @@ public class UsuarioDAO {
 		System.out.println("Conectado com ao banco de dados!");
 	}
 	
-	public void inserir(Ocorrencia ocorrencia) throws SQLException{
-		String sql = "INSERT INTO ocorrencias "
-				+ "(logradouro, numero, id_bairro, complemento, cep, id_problema, id_anexo, "
-				+ "data_criacao, data_atualizacao) "
-				+ "VALUES ("
-				+ "'" + ocorrencia.getEndereco().getLogradouro() + "', "
-				+ "'" + ocorrencia.getEndereco().getNumero() + "', "
-				+ "(SELECT id_bairro FROM bairros WHERE bairro = '" + ocorrencia.getEndereco().getBairro() + "'), "
-				+ "'" + ocorrencia.getEndereco().getComplemento() + "', "
-				+ "'" + ocorrencia.getEndereco().getCep() + "', "
-				+ "(SELECT id_problema FROM problemas WHERE tipo_problema = '" + ocorrencia.getTipoProblema() + "'), "
-				+ "(SELECT id_anexo FROM anexos WHERE caminho_anexo = '" + ocorrencia.getImagePath() + "'), "
-				+ "CURDATE(), "
-				+ "CURDATE());";
+	public void inserir(String bairro) throws SQLException{
+		String sql = "INSERT INTO bairros (bairro) VALUES ('"+bairro+"');";
 		
 		Statement stmt = conn.createStatement();
 		stmt.execute(sql);
+		
 		System.out.println("Dados inseridos no banco!");
-
+		
 		stmt.close();
 		conn.close();
 	}
 	
-	public JSONArray getListaProblemas() throws SQLException{
-		JSONArray jsonArray;
-		String sql = "SELECT tipo_problema FROM problemas;";
+	public void remover(String bairro) throws SQLException{
+		String sql = "DELETE FROM bairros WHERE bairro = '"+bairro+"';";
+		
+		Statement stmt = conn.createStatement();
+		stmt.execute(sql);
+		
+		System.out.println("Dados removidos do banco!");
+		
+		stmt.close();
+		conn.close();
+	}
+	
+	public void atualizar(String bairro){
+		
+	}
+	
+	public List<String> consultarBairros() throws SQLException{
+		List<String> listaBairros;
+		String sql = "SELECT bairro FROM bairros;";
 		
 		PreparedStatement stmt = conn.prepareStatement(sql);
 		ResultSet rs = stmt.executeQuery();
-		
-		jsonArray = new JSONArray();
+
+		listaBairros = new ArrayList<String>();
 		
 		while(rs.next()){
-			jsonArray.put(rs.getString("tipo_problema"));
+			listaBairros.add(rs.getString("bairro"));
 		}
-		
+
 		stmt.close();
 		conn.close();
 		rs.close();
 		
-		return jsonArray;
+		return listaBairros;
 	}
 	
-	public JSONArray getListaBairros() throws SQLException{
+	public JSONArray consultarBairrosJson() throws SQLException{
 		JSONArray jsonArray;
 		String sql = "SELECT bairro FROM bairros;";
 		

@@ -1,6 +1,7 @@
 package br.com.lorencity.servlet;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -8,19 +9,20 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import br.com.lorencity.bo.BoGestor;
+import br.com.lorencity.bo.BoProblemas;
+import br.com.lorencity.modelo.TipoDeProblema;
 
 /**
- * Servlet implementation class ServletGestor
+ * Servlet implementation class ServletProblemas
  */
-@WebServlet("/ServletGestor")
-public class ServletGestor extends HttpServlet {
+@WebServlet("/ServletProblemas")
+public class ServletProblemas extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ServletGestor() {
+    public ServletProblemas() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -36,33 +38,45 @@ public class ServletGestor extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+
 		String action = request.getParameter("action");
+		TipoDeProblema problema = null;
 		String responseString = null;
 		
-		BoGestor boGestor;
-		
+		BoProblemas boProblemas;
+		System.out.println(action);
 		try{
-			boGestor = new BoGestor();
+			boProblemas = new BoProblemas();
 			
 			switch (action) {
 			case "inserir":
-				//
+				problema = new TipoDeProblema();
+				problema.setProblema(request.getParameter("problema"));
+				problema.setPrioridade(request.getParameter("prioridade"));
+				responseString = boProblemas.inserir(problema);
 				break;
 			case "remover":
-				//
+				problema = new TipoDeProblema();
+				problema.setProblema(request.getParameter("problema"));
+				responseString = boProblemas.remover(problema);
 				break;
 			case "atualizar":
-				//
+				//faltando implementação
 				
+				responseString = boProblemas.atualizar();
 				break;
-			case "consultarBairros":
-				//
+			case "consultarProblemas":
+				List<String> listaProblemas;
+				listaProblemas = boProblemas.consultarProblemas();
 				
 				//setar no request
 				break;
-			case "consultarBairrosJson":
-				//
+			case "consultarProblemasJson":
+				responseString = boProblemas.consultarProblemasJson();
+				
+				response.setContentType("application/json");
+				response.setCharacterEncoding("UTF-8");
+				response.getWriter().write(responseString);
 				
 				break;
 			default:
@@ -77,6 +91,7 @@ public class ServletGestor extends HttpServlet {
 		
 		//retorno para a página e setar atributos
 		System.out.println("Resposta enviada com sucesso.");
+
 	}
 
 }

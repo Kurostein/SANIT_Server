@@ -1,62 +1,74 @@
 package br.com.lorencity.bo;
 
-import br.com.lorencity.modelo.Ocorrencia;
+import java.sql.SQLException;
+import java.util.List;
+
+import javax.naming.NamingException;
+
+import br.com.lorencity.dao.FiscalDAO;
+import br.com.lorencity.modelo.Fiscal;
+import br.com.lorencity.modelo.Usuario;
 
 public class BoFiscal {
-	//Recebe a ação requisitada ao servlet e a executa.
-	
-	private String action;
-	private Ocorrencia denunciaApurada;
 	
 	public BoFiscal(){
-		this.action = null;
-		this.denunciaApurada = null;
+		
 	}
-	
-	public Ocorrencia doServletAction(Ocorrencia dadosDenuncia, String action){	
-		this.denunciaApurada = dadosDenuncia;
-		this.action = action;
-		
-		doAction(action);
-		
-		return this.denunciaApurada;
+
+	public List<Fiscal> consultarFiscais() {
+		List<Fiscal> listaFiscais;
+		FiscalDAO fiscalDAO;
+		try{
+			fiscalDAO = new FiscalDAO();
+			listaFiscais = fiscalDAO.consultarFiscais();
+		}catch(SQLException e){
+			System.err.println("Problema na conexão com o banco.");
+			throw new RuntimeException("Problema na conexão com o banco.", e);
+		}catch (NamingException e) {
+			System.err.println("Problema na conexão com o banco.");
+			throw new RuntimeException("Problema na conexão com o banco.", e);
+		}
+				
+		return listaFiscais;
 	}
-	
-	public void doAction(String Action){
-		//Chama função de ação baseado na ação passada.
+
+	public String atualizar() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public String remover(Usuario usuario) {
+		FiscalDAO fiscalDAO;
 		
-		switch (action) {
-		case "inserir":
-			inserirDados();
-			break;
-		case "remover":
-			removerDados();
-			break;
-		case "atualizar":
-			atualizarDados();
-			break;
-		case "consultar":
-			consultarDados();
-			break;
-			default:
-			break;
+		try{
+			fiscalDAO = new FiscalDAO();
+			fiscalDAO.remover(usuario);
+			
+			return "Usuário removido com sucesso!";
+		}catch(SQLException e){
+			System.err.println("Problema na conexão com o banco.");
+			throw new RuntimeException("Problema na conexão com o banco.", e);
+		}catch (NamingException e) {
+			System.err.println("Problema na conexão com o banco.");
+			throw new RuntimeException("Problema na conexão com o banco.", e);
 		}
 	}
-		private void consultarDados() {
-		// TODO Auto-generated method stub
+
+	public String inserir(Usuario usuario) {
+		FiscalDAO fiscalDAO;
 		
-	}
-		private void atualizarDados() {
-		// TODO Auto-generated method stub
-		
-	}
-		private void removerDados() {
-		// TODO Auto-generated method stub
-		
-	}
-		private void inserirDados() {
-		// TODO Auto-generated method stub
-		
+		try{
+			fiscalDAO = new FiscalDAO();
+			fiscalDAO.inserir(usuario);
+			
+			return "Usuário inserido com sucesso!";
+		}catch(SQLException e){
+			System.err.println("Problema na conexão com o banco.");
+			throw new RuntimeException("Problema na conexão com o banco.", e);
+		}catch (NamingException e) {
+			System.err.println("Problema na conexão com o banco.");
+			throw new RuntimeException("Problema na conexão com o banco.", e);
+		}
 	}
 
 }
