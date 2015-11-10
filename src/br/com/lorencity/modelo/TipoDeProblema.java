@@ -3,7 +3,7 @@ package br.com.lorencity.modelo;
 public class TipoDeProblema {
 
 	private String problema;
-	private String prioridade;
+	private int prioridade;
 	
 	public String getProblema() {
 		return problema;
@@ -11,11 +11,11 @@ public class TipoDeProblema {
 	public void setProblema(String problema) {
 		this.problema = problema.trim();
 	}
-	public String getPrioridade() {
+	public int getPrioridade() {
 		return prioridade;
 	}
-	public void setPrioridade(String prioridade) {
-		this.prioridade = prioridade.trim();
+	public void setPrioridade(int prioridade) {
+		this.prioridade = prioridade;
 	}
 	
 	

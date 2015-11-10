@@ -52,7 +52,7 @@ public class ServletProblemas extends HttpServlet {
 			case "inserir":
 				problema = new TipoDeProblema();
 				problema.setProblema(request.getParameter("problema"));
-				problema.setPrioridade(request.getParameter("prioridade"));
+				problema.setPrioridade(Integer.parseInt(request.getParameter("prioridade")));
 				responseString = boProblemas.inserir(problema);
 				break;
 			case "remover":
@@ -66,7 +66,7 @@ public class ServletProblemas extends HttpServlet {
 				responseString = boProblemas.atualizar();
 				break;
 			case "consultarProblemas":
-				List<String> listaProblemas;
+				List<TipoDeProblema> listaProblemas;
 				listaProblemas = boProblemas.consultarProblemas();
 				
 				//setar no request

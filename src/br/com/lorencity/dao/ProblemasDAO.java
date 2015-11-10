@@ -59,17 +59,22 @@ public class ProblemasDAO {
 		
 	}
 	
-	public List<String> consultarProblemas() throws SQLException{
-		List<String> listaProblemas;
-		String sql = "SELECT tipo_problema FROM problemas;";
+	public List<TipoDeProblema> consultarProblemas() throws SQLException{
+		List<TipoDeProblema> listaProblemas;
+		TipoDeProblema problema;
+		
+		String sql = "SELECT tipo_problema, prioridade FROM problemas;";
 		
 		PreparedStatement stmt = conn.prepareStatement(sql);
 		ResultSet rs = stmt.executeQuery();
 
-		listaProblemas = new ArrayList<String>();
+		listaProblemas = new ArrayList<TipoDeProblema>();
 		
 		while(rs.next()){
-			listaProblemas.add(rs.getString("tipo_problema"));
+			problema = new TipoDeProblema();
+			problema.setProblema(rs.getString("tipo_problema"));
+			problema.setPrioridade(rs.getInt("prioridade"));
+			listaProblemas.add(problema);
 		}
 
 		stmt.close();

@@ -1,5 +1,8 @@
 package br.com.lorencity.modelo;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 import org.json.JSONObject;
 
 public class Endereco {
@@ -53,16 +56,30 @@ public class Endereco {
 		this.complemento = complemento.trim();
 	}
 	
-	public static Endereco preencherEndereco(JSONObject jsonRequest){
+	public static Endereco preencherEndereco(JSONObject addressData){
 		Endereco endereco = new Endereco();
 		
 		System.out.println("Inserindo dados do endereço.");
 		
-		endereco.setLogradouro(jsonRequest.getString("logradouro"));
-		endereco.setNumero(Integer.parseInt(jsonRequest.getString("numero")));
-		endereco.setBairro(jsonRequest.getString("bairro"));
-		endereco.setComplemento(jsonRequest.getString("complemento"));
-		endereco.setCep(jsonRequest.getString("cep"));
+		endereco.setLogradouro(addressData.getString("logradouro"));
+		endereco.setNumero(Integer.parseInt(addressData.getString("numero")));
+		endereco.setBairro(addressData.getString("bairro"));
+		endereco.setComplemento(addressData.getString("complemento"));
+		endereco.setCep(addressData.getString("cep"));
+		
+		return endereco;
+	}
+	
+	public static Endereco preencherEndereco(ResultSet addressData) throws SQLException{
+		Endereco endereco = new Endereco();
+		
+		System.out.println("Inserindo dados do endereço.");
+		
+		endereco.setLogradouro(addressData.getString("logradouro"));
+		endereco.setNumero(Integer.parseInt(addressData.getString("numero")));
+		endereco.setBairro(addressData.getString("bairro"));
+		endereco.setComplemento(addressData.getString("complemento"));
+		endereco.setCep(addressData.getString("cep"));
 		
 		return endereco;
 	}

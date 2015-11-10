@@ -35,8 +35,8 @@ public class BoProblemas {
 		return sJson;
 	}
 
-	public List<String> consultarProblemas() {
-		List<String> listaProblemas;
+	public List<TipoDeProblema> consultarProblemas() {
+		List<TipoDeProblema> listaProblemas;
 		try{
 			ProblemasDAO problemasDAO = new ProblemasDAO();
 			listaProblemas = problemasDAO.consultarProblemas();

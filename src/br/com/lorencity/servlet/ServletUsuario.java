@@ -13,6 +13,7 @@ import org.json.JSONObject;
 import br.com.lorencity.bo.BoUsuario;
 import br.com.lorencity.modelo.Endereco;
 import br.com.lorencity.modelo.Ocorrencia;
+import br.com.lorencity.modelo.TipoDeProblema;
 
 /**
  * Servlet implementation class ServletUsuario
@@ -49,13 +50,18 @@ public class ServletUsuario extends HttpServlet {
 		String action = jsonRequest.getString("action");
 				
 		Ocorrencia ocorrencia = null;
+		TipoDeProblema problema;
 		String responseString;
 		
 		try{
 			if(action.equals("inserir")){
 				ocorrencia = new Ocorrencia();
 				ocorrencia.setEndereco(Endereco.preencherEndereco(jsonRequest));
-				ocorrencia.setTipoProblema(jsonRequest.getString("tipoProblema"));
+				
+				problema = new TipoDeProblema();
+				problema.setProblema(jsonRequest.getString("tipoProblema"));
+				
+				ocorrencia.setTipoProblema(problema);
 				ocorrencia.setImagePath(jsonRequest.getString("imagem"));
 			}
 			

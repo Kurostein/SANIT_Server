@@ -38,7 +38,7 @@ public class UsuarioDAO {
 				+ "(SELECT id_bairro FROM bairros WHERE bairro = '" + ocorrencia.getEndereco().getBairro() + "'), "
 				+ "'" + ocorrencia.getEndereco().getComplemento() + "', "
 				+ "'" + ocorrencia.getEndereco().getCep() + "', "
-				+ "(SELECT id_problema FROM problemas WHERE tipo_problema = '" + ocorrencia.getTipoProblema() + "'), "
+				+ "(SELECT id_problema FROM problemas WHERE tipo_problema = '" + ocorrencia.getTipoProblema().getProblema() + "'), "
 				+ "(SELECT id_anexo FROM anexos WHERE caminho_anexo = '" + ocorrencia.getImagePath() + "'), "
 				+ "CURDATE(), "
 				+ "CURDATE());";

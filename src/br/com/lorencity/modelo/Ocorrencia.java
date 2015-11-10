@@ -3,18 +3,27 @@ package br.com.lorencity.modelo;
 
 public class Ocorrencia {
 	private Endereco endereco;
-	private String tipoProblema;
+	private TipoDeProblema tipoProblema;
 	private String imagePath;
+	private Fiscal fiscal;
 
 	public Ocorrencia(){
 		
 	}
 	
-	public String getTipoProblema() {
+	public Fiscal getFiscal() {
+		return this.fiscal;
+	}
+
+	public void setFiscal(Fiscal fiscal) {
+		this.fiscal = fiscal;
+	}
+
+	public TipoDeProblema getTipoProblema() {
 		return this.tipoProblema;
 	}
 
-	public void setTipoProblema(String tipoProblema) {
+	public void setTipoProblema(TipoDeProblema tipoProblema) {
 		this.tipoProblema = tipoProblema;
 	}
 
