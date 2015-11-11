@@ -1,6 +1,8 @@
 package br.com.lorencity.servlet;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -8,7 +10,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.json.JSONObject;
+
 import br.com.lorencity.bo.BoGestor;
+import br.com.lorencity.modelo.Endereco;
+import br.com.lorencity.modelo.Ocorrencia;
+import br.com.lorencity.modelo.TipoDeProblema;
 
 /**
  * Servlet implementation class ServletGestor
@@ -40,30 +47,50 @@ public class ServletGestor extends HttpServlet {
 		String action = request.getParameter("action");
 		String responseString = null;
 		
+		List<Ocorrencia> lista;
+		List<JSONObject> listaJson;
+		
 		BoGestor boGestor;
 		
 		try{
 			boGestor = new BoGestor();
 			
 			switch (action) {
-			case "inserir":
-				//
-				break;
-			case "remover":
-				//
-				break;
-			case "atualizar":
-				//
+			case "listarOcorrencias":
+				lista = new ArrayList<Ocorrencia>();
+				lista = boGestor.listarOcorrencias();
 				
+				request.setAttribute("listaOcorrencias", lista);
 				break;
-			case "consultarBairros":
-				//
+			case "consultarOcorrenciasPorBairro":
+				Endereco endereco = new Endereco();
+				endereco.setBairro(request.getParameter("bairro"));
 				
-				//setar no request
+				lista = new ArrayList<Ocorrencia>();				
+				lista = boGestor.consultarOcorrenciasPorBairro(endereco);
+				
+				request.setAttribute("listaOcorrenciasPorBairro", lista);
 				break;
-			case "consultarBairrosJson":
-				//
+			case "consultarOcorrenciasPorProblema":
+				TipoDeProblema problema = new TipoDeProblema();
+				problema.setProblema(request.getParameter("problema"));
 				
+				lista = new ArrayList<Ocorrencia>();			
+				lista = boGestor.consultarOcorrenciasPorProblema(problema);
+				
+				request.setAttribute("listaOcorrenciasPorProblema", lista);
+				break;
+			case "consultarNumeroDeOcorrenciasPorProblema":
+				listaJson = new ArrayList<JSONObject>();			
+				listaJson = boGestor.consultarNumeroDeOcorrenciasPorProblema();
+				
+				request.setAttribute("listaNumeroOcorrenciasPorProblema", listaJson);
+				break;
+			case "consultarNumeroDeOcorrenciasPorBairro":
+				listaJson = new ArrayList<JSONObject>();			
+				listaJson = boGestor.consultarNumeroDeOcorrenciasPorBairro();
+				
+				request.setAttribute("listaNumeroOcorrenciasPorBairro", listaJson);
 				break;
 			default:
 				responseString = "Filter Error";
@@ -75,7 +102,7 @@ public class ServletGestor extends HttpServlet {
 			e.printStackTrace();
 		}
 		
-		//retorno para a página e setar atributos
+		//retorno para a página e setar atributos (método com requestDispatcher)
 		System.out.println("Resposta enviada com sucesso.");
 	}
 

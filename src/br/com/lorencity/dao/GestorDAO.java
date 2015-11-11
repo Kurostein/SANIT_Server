@@ -32,6 +32,50 @@ public class GestorDAO {
 		System.out.println("Conectado com ao banco de dados!");
 	}
 	
+	//Retorna todas as ocorrências.
+	public List<Ocorrencia> listarOcorrencias() throws SQLException{
+		List<Ocorrencia> listaOcorrencias;
+		Ocorrencia ocorrencia;
+		Fiscal fiscal;
+		TipoDeProblema problema;
+		
+		String sql = "SELECT O.logradouro, O.numero, B.bairro, O.cep, P.tipo_problema, "
+				+ "P.prioridade"
+				+ "FROM ocorrencias O, bairros B, problemas P"
+				+ "WHERE O.id_bairro = B.id_bairro"
+				+ "AND O.id_problema = P.id_problema"
+				+ "ORDER BY B.bairro;";
+		
+		PreparedStatement stmt = conn.prepareStatement(sql);
+		ResultSet rs = stmt.executeQuery();
+
+		listaOcorrencias = new ArrayList<Ocorrencia>();
+		
+		while(rs.next()){
+			fiscal = new Fiscal();
+			fiscal.setMatricula(Integer.parseInt(rs.getString("matricula")));
+			
+			ocorrencia = new Ocorrencia();
+			ocorrencia.setEndereco(Endereco.preencherEndereco(rs));
+			ocorrencia.setFiscal(fiscal);
+			
+			problema = new TipoDeProblema();
+			problema.setProblema(rs.getString("tipo_problema"));
+			problema.setPrioridade(rs.getInt("prioridade"));
+			
+			ocorrencia.setTipoProblema(problema);
+			
+			listaOcorrencias.add(ocorrencia);
+		}
+
+		stmt.close();
+		conn.close();
+		rs.close();
+		
+		return listaOcorrencias;
+	}
+	
+	//Retorna todas as ocorrências do bairro informado.
 	public List<Ocorrencia> consultarOcorrenciasPorBairro(Endereco endereco) throws SQLException{
 		List<Ocorrencia> listaOcorrencias;
 		Ocorrencia ocorrencia;
@@ -75,6 +119,7 @@ public class GestorDAO {
 		return listaOcorrencias;
 	}
 	
+	//Retorna todas as ocorrências do tipo de problema informado.
 	public List<Ocorrencia> consultarOcorrenciasPorProblema(TipoDeProblema problema) throws SQLException{
 		List<Ocorrencia> listaOcorrencias;
 		Ocorrencia ocorrencia;
@@ -117,6 +162,7 @@ public class GestorDAO {
 		return listaOcorrencias;
 	}
 	
+	//Retorna todos os problemas e a quantidade de ocorrencias em cada um.
 	public List<JSONObject> consultarNumeroDeOcorrenciasPorProblema() throws SQLException{
 		List<JSONObject> lista;
 		JSONObject json;
@@ -147,6 +193,7 @@ public class GestorDAO {
 		return lista;
 	}
 	
+	//Retorna todos os bairros e a quantidade de ocorrencias em cada um.
 	public List<JSONObject> consultarNumeroDeOcorrenciasPorBairro() throws SQLException{
 		List<JSONObject> lista;
 		JSONObject json;
