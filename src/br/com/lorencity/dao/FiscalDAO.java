@@ -65,8 +65,23 @@ public class FiscalDAO {
 		conn.close();
 	}
 	
-	public void atualizar(Usuario usuario){
+	public void atualizar(Usuario usuario) throws SQLException{
+		Fiscal fiscal = (Fiscal) usuario;
 		
+		String sql = "UPDATE fiscais "
+				+ "SET cpf = '"+fiscal.getCPF()+"', "
+				+ "nome = '"+fiscal.getNome()+"', "
+				+ "matricula = "+fiscal.getMatricula()+"', "
+				+ "senha = '"+fiscal.getSenha()
+				+ "WHERE id_fiscal = "+fiscal.getId()+";";
+		
+		Statement stmt = conn.createStatement();
+		stmt.execute(sql);
+		
+		System.out.println("Usuário atualizado no banco!");
+		
+		stmt.close();
+		conn.close();
 	}
 	
 	public List<Fiscal> consultarFiscais() throws SQLException{
@@ -82,6 +97,7 @@ public class FiscalDAO {
 		
 		while(rs.next()){
 			fiscal = new Fiscal();
+			fiscal.setId(rs.getInt("id_fiscal"));
 			fiscal.setNome(rs.getString("nome"));
 			fiscal.setCPF(rs.getString("cpf"));
 			fiscal.setMatricula(Integer.parseInt(rs.getString("matricula")));

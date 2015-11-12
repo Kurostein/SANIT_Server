@@ -51,9 +51,21 @@ public class BoProblemas {
 		return listaProblemas;
 	}
 
-	public String atualizar() {
-		// TODO Auto-generated method stub
-		return null;
+	public String atualizar(TipoDeProblema problema) {
+		ProblemasDAO problemasDAO;
+		
+		try{
+			problemasDAO = new ProblemasDAO();
+			problemasDAO.atualizar(problema);
+			
+			return "Problema atualizado com sucesso!";
+		}catch(SQLException e){
+			System.err.println("Problema na conexão com o banco.");
+			throw new RuntimeException("Problema na conexão com o banco.", e);
+		}catch (NamingException e) {
+			System.err.println("Problema na conexão com o banco.");
+			throw new RuntimeException("Problema na conexão com o banco.", e);
+		}
 	}
 
 	public String remover(TipoDeProblema problema) {

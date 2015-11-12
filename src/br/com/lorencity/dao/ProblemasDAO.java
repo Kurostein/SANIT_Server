@@ -55,15 +55,24 @@ public class ProblemasDAO {
 		conn.close();
 	}
 	
-	public void atualizar(String bairro){
+	public void atualizar(TipoDeProblema problema) throws SQLException{
+		String sql = "UPDATE problemas SET tipo_problema = '"+problema.getProblema()
+				+ "'WHERE id_problema = "+problema.getId()+";";
 		
+		Statement stmt = conn.createStatement();
+		stmt.execute(sql);
+		
+		System.out.println("Dados atualizados no banco!");
+		
+		stmt.close();
+		conn.close();
 	}
 	
 	public List<TipoDeProblema> consultarProblemas() throws SQLException{
 		List<TipoDeProblema> listaProblemas;
 		TipoDeProblema problema;
 		
-		String sql = "SELECT tipo_problema, prioridade FROM problemas;";
+		String sql = "SELECT * FROM problemas;";
 		
 		PreparedStatement stmt = conn.prepareStatement(sql);
 		ResultSet rs = stmt.executeQuery();
@@ -72,6 +81,7 @@ public class ProblemasDAO {
 		
 		while(rs.next()){
 			problema = new TipoDeProblema();
+			problema.setId(rs.getInt("id_problema"));
 			problema.setProblema(rs.getString("tipo_problema"));
 			problema.setPrioridade(rs.getInt("prioridade"));
 			listaProblemas.add(problema);

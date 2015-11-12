@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import br.com.lorencity.bo.BoBairros;
+import br.com.lorencity.modelo.Bairro;
 
 /**
  * Servlet implementation class ServletBairros
@@ -39,7 +40,7 @@ public class ServletBairros extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		String action = request.getParameter("action");
-		String bairro = null;
+		Bairro bairro = null;
 		String responseString = null;
 		
 		BoBairros boBairros;
@@ -49,20 +50,23 @@ public class ServletBairros extends HttpServlet {
 			
 			switch (action) {
 			case "inserir":
-				bairro = request.getParameter("bairro");
+				bairro = new Bairro();
+				bairro.setNome(request.getParameter("bairro"));
 				responseString = boBairros.inserir(bairro);
 				break;
 			case "remover":
-				bairro = request.getParameter("bairro");
+				bairro = new Bairro();
+				bairro.setNome(request.getParameter("bairro"));
 				responseString = boBairros.remover(bairro);
 				break;
 			case "atualizar":
-				//faltando implementação
-				
-				responseString = boBairros.atualizar();
+				bairro = new Bairro();
+				bairro.setNome(request.getParameter("bairro"));
+				bairro.setId(Integer.parseInt(request.getParameter("id")));
+				responseString = boBairros.atualizar(bairro);
 				break;
 			case "consultarBairros":
-				List<String> listaBairros;
+				List<Bairro> listaBairros = null;
 				listaBairros = boBairros.consultarBairros();
 				
 				//setar no request

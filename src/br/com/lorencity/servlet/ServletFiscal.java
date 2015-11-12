@@ -63,8 +63,11 @@ public class ServletFiscal extends HttpServlet {
 				responseString = boFiscal.remover(fiscal);
 				break;
 			case "atualizar":
-				//faltando implementação
-				
+				fiscal = new Fiscal();
+				fiscal.setCPF(request.getParameter("cpf"));
+				fiscal.setNome(request.getParameter("nome"));
+				fiscal.setMatricula(Integer.parseInt(request.getParameter("matricula")));
+				fiscal.setSenha(request.getParameter("senha"));
 				break;
 			case "consultarFiscais":
 				List<Fiscal> listaFiscais;

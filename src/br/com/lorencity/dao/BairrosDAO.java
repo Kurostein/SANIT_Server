@@ -15,6 +15,8 @@ import javax.sql.DataSource;
 
 import org.json.JSONArray;
 
+import br.com.lorencity.modelo.Bairro;
+
 public class BairrosDAO {
 
 	private Connection conn;
@@ -28,8 +30,8 @@ public class BairrosDAO {
 		System.out.println("Conectado com ao banco de dados!");
 	}
 	
-	public void inserir(String bairro) throws SQLException{
-		String sql = "INSERT INTO bairros (bairro) VALUES ('"+bairro+"');";
+	public void inserir(Bairro bairro) throws SQLException{
+		String sql = "INSERT INTO bairros (bairro) VALUES ('"+bairro.getNome()+"');";
 		
 		Statement stmt = conn.createStatement();
 		stmt.execute(sql);
@@ -40,8 +42,8 @@ public class BairrosDAO {
 		conn.close();
 	}
 	
-	public void remover(String bairro) throws SQLException{
-		String sql = "DELETE FROM bairros WHERE bairro = '"+bairro+"';";
+	public void remover(Bairro bairro) throws SQLException{
+		String sql = "DELETE FROM bairros WHERE bairro = '"+bairro.getNome()+"';";
 		
 		Statement stmt = conn.createStatement();
 		stmt.execute(sql);
@@ -52,21 +54,36 @@ public class BairrosDAO {
 		conn.close();
 	}
 	
-	public void atualizar(String bairro){
+	public void atualizar(Bairro bairro) throws SQLException{
+		String sql = "UPDATE bairros SET bairro = '"+bairro.getNome()+"' "
+				+ "WHERE id_bairro = "+bairro.getId()+";";
 		
+		Statement stmt = conn.createStatement();
+		stmt.execute(sql);
+		
+		System.out.println("Dados atualizados no banco!");
+		
+		stmt.close();
+		conn.close();
 	}
 	
-	public List<String> consultarBairros() throws SQLException{
-		List<String> listaBairros;
-		String sql = "SELECT bairro FROM bairros;";
+	public List<Bairro> consultarBairros() throws SQLException{
+		List<Bairro> listaBairros;
+		Bairro bairro;
+		
+		String sql = "SELECT * FROM bairros;";
 		
 		PreparedStatement stmt = conn.prepareStatement(sql);
 		ResultSet rs = stmt.executeQuery();
 
-		listaBairros = new ArrayList<String>();
+		listaBairros = new ArrayList<Bairro>();
+		bairro = new Bairro();
 		
 		while(rs.next()){
-			listaBairros.add(rs.getString("bairro"));
+			bairro.setNome(rs.getString("bairro"));
+			bairro.setId(rs.getInt("id_bairro"));
+			
+			listaBairros.add(bairro);
 		}
 
 		stmt.close();

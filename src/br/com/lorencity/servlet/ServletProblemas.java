@@ -61,9 +61,10 @@ public class ServletProblemas extends HttpServlet {
 				responseString = boProblemas.remover(problema);
 				break;
 			case "atualizar":
-				//faltando implementação
-				
-				responseString = boProblemas.atualizar();
+				problema = new TipoDeProblema();
+				problema.setProblema(request.getParameter("problema"));
+				problema.setId(Integer.parseInt(request.getParameter("id")));
+				responseString = boProblemas.atualizar(problema);
 				break;
 			case "consultarProblemas":
 				List<TipoDeProblema> listaProblemas;

@@ -1,11 +1,11 @@
 package br.com.lorencity.modelo;
 
-public class Usuario {
+public class Bairro {
+
 	private String nome;
-	private String CPF;
 	private int id;
 	
-	public Usuario(){
+	public Bairro(){
 		
 	}
 
@@ -15,14 +15,6 @@ public class Usuario {
 
 	public void setNome(String nome) {
 		this.nome = nome.trim();
-	}
-
-	public String getCPF() {
-		return this.CPF;
-	}
-
-	public void setCPF(String CPF) {
-		this.CPF = CPF.trim();
 	}
 
 	public int getId() {

@@ -9,6 +9,7 @@ import org.json.JSONArray;
 
 import br.com.lorencity.dao.BairrosDAO;
 import br.com.lorencity.dao.UsuarioDAO;
+import br.com.lorencity.modelo.Bairro;
 
 public class BoBairros {
 
@@ -35,8 +36,8 @@ public class BoBairros {
 		return sJson;
 	}
 
-	public List<String> consultarBairros() {
-		List<String> listaBairros;
+	public List<Bairro> consultarBairros() {
+		List<Bairro> listaBairros;
 		try{
 			BairrosDAO bairrosDAO = new BairrosDAO();
 			listaBairros = bairrosDAO.consultarBairros();
@@ -51,12 +52,24 @@ public class BoBairros {
 		return listaBairros;
 	}
 
-	public String atualizar() {
-		// TODO Auto-generated method stub
-		return null;
+	public String atualizar(Bairro bairro) {
+		BairrosDAO bairrosDAO;
+		
+		try{
+			bairrosDAO = new BairrosDAO();
+			bairrosDAO.atualizar(bairro);
+			
+			return "Bairro atualizado com sucesso!";
+		}catch(SQLException e){
+			System.err.println("Problema na conexão com o banco.");
+			throw new RuntimeException("Problema na conexão com o banco.", e);
+		}catch (NamingException e) {
+			System.err.println("Problema na conexão com o banco.");
+			throw new RuntimeException("Problema na conexão com o banco.", e);
+		}
 	}
 
-	public String remover(String bairro) {
+	public String remover(Bairro bairro) {
 		BairrosDAO bairrosDAO;
 		
 		try{
@@ -73,7 +86,7 @@ public class BoBairros {
 		}
 	}
 
-	public String inserir(String bairro) {
+	public String inserir(Bairro bairro) {
 		BairrosDAO bairrosDAO;
 		
 		try{
