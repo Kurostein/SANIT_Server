@@ -5,10 +5,9 @@ import java.util.List;
 
 import javax.naming.NamingException;
 
-import org.json.JSONObject;
-
 import br.com.lorencity.dao.GestorDAO;
 import br.com.lorencity.modelo.Endereco;
+import br.com.lorencity.modelo.Estatistica;
 import br.com.lorencity.modelo.Ocorrencia;
 import br.com.lorencity.modelo.TipoDeProblema;
 
@@ -72,9 +71,9 @@ public class BoGestor {
 		return lista;
 	}
 	
-	public List<JSONObject> consultarNumeroDeOcorrenciasPorProblema() throws RuntimeException{
+	public List<Estatistica> consultarNumeroDeOcorrenciasPorProblema() throws RuntimeException{
 		GestorDAO gestorDAO;
-		List<JSONObject> lista = null;
+		List<Estatistica> lista = null;
 		
 		try {
 			gestorDAO = new GestorDAO();
@@ -90,9 +89,9 @@ public class BoGestor {
 		return lista;
 	}
 	
-	public List<JSONObject> consultarNumeroDeOcorrenciasPorBairro() throws RuntimeException{
+	public List<Estatistica> consultarNumeroDeOcorrenciasPorBairro() throws RuntimeException{
 		GestorDAO gestorDAO;
-		List<JSONObject> lista = null;
+		List<Estatistica> lista = null;
 		
 		try {
 			gestorDAO = new GestorDAO();

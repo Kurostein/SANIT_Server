@@ -12,9 +12,8 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-import org.json.JSONObject;
-
 import br.com.lorencity.modelo.Endereco;
+import br.com.lorencity.modelo.Estatistica;
 import br.com.lorencity.modelo.Fiscal;
 import br.com.lorencity.modelo.Ocorrencia;
 import br.com.lorencity.modelo.TipoDeProblema;
@@ -163,9 +162,9 @@ public class GestorDAO {
 	}
 	
 	//Retorna todos os problemas e a quantidade de ocorrencias em cada um.
-	public List<JSONObject> consultarNumeroDeOcorrenciasPorProblema() throws SQLException{
-		List<JSONObject> lista;
-		JSONObject json;
+	public List<Estatistica> consultarNumeroDeOcorrenciasPorProblema() throws SQLException{
+		List<Estatistica> lista;
+		Estatistica estatistica;
 		
 		String sql = "SELECT P.tipo_problema AS Problema, COUNT(O.id_ocorrencia) AS Quantidade"
 				+ "FROM problemas P, ocorrencias O"
@@ -176,14 +175,14 @@ public class GestorDAO {
 		PreparedStatement stmt = conn.prepareStatement(sql);
 		ResultSet rs = stmt.executeQuery();
 
-		lista = new ArrayList<JSONObject>();
+		lista = new ArrayList<Estatistica>();
 		
 		while(rs.next()){
-			json = new JSONObject();
-			json.put("Problema", rs.getString("Problema"));
-			json.put("Quantidade", rs.getString("Quantidade"));
+			estatistica = new Estatistica();
+			estatistica.setDescricao(rs.getString("Problema"));
+			estatistica.setQuantidade(rs.getInt("Quantidade"));
 			
-			lista.add(json);
+			lista.add(estatistica);
 		}
 
 		stmt.close();
@@ -194,9 +193,9 @@ public class GestorDAO {
 	}
 	
 	//Retorna todos os bairros e a quantidade de ocorrencias em cada um.
-	public List<JSONObject> consultarNumeroDeOcorrenciasPorBairro() throws SQLException{
-		List<JSONObject> lista;
-		JSONObject json;
+	public List<Estatistica> consultarNumeroDeOcorrenciasPorBairro() throws SQLException{
+		List<Estatistica> lista;
+		Estatistica estatistica;
 		
 		String sql = "SELECT B.bairro AS Bairro, COUNT(O.id_ocorrencia) AS Quantidade"
 				+ "FROM bairros B, ocorrencias O"
@@ -207,14 +206,14 @@ public class GestorDAO {
 		PreparedStatement stmt = conn.prepareStatement(sql);
 		ResultSet rs = stmt.executeQuery();
 
-		lista = new ArrayList<JSONObject>();
+		lista = new ArrayList<Estatistica>();
 		
 		while(rs.next()){
-			json = new JSONObject();
-			json.put("Bairro", rs.getString("Bairro"));
-			json.put("Quantidade", rs.getString("Quantidade"));
+			estatistica = new Estatistica();
+			estatistica.setDescricao(rs.getString("Bairro"));
+			estatistica.setQuantidade(rs.getInt("Quantidade"));
 			
-			lista.add(json);
+			lista.add(estatistica);
 		}
 
 		stmt.close();

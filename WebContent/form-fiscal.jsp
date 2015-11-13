@@ -65,7 +65,7 @@
 
 						<c:if test="${action == 'atualizar'}">
 							<label>Matrícula:</label>
-							<input type="number" name="matricula" value="${fiscal.matricula}" placeholder="Número da matrícula" readonly>
+							<input class="inputReadOnly" type="number" name="matricula" value="${fiscal.matricula}" placeholder="Número da matrícula" readonly>
 	   					</c:if>
 
 						<c:if test="${action == 'inserir'}">

@@ -5,52 +5,108 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 	<link rel="stylesheet" href="css/style.css">
-	<link rel="stylesheet" href="css/page-layout.css">
 	<title>Inicio</title>
 	<script type="text/javascript" src="js/scripts.js"></script>
 	<script type="text/javascript" src="js/redirectFunction.js"></script>
 </head>
 <body>
-<div id="body">
-	<header class="cabecalho">
-		<img src="imagens/oie_transparent(3).png">
-	</header>
+<header class="cabecalho">
+	<img src="imagens/oie_transparent(3).png">
+</header>
+ <nav>	
+	<ul id="visualizacao" class="listaInicio">
+		<li><a>GERENCIA DE TIPOS DE PROBLEMA</a>
+			<ul>
+				<li>
+					<form id="pagAdicionarProblemas" method="post" action="ServletProblemas">
+						<input type="hidden" name="pagSelecionada" value="pagInserir" />
+					</form>
+					<a href="#" onClick="redirectAdicionarProblemas()">ADICIONAR</a>
+				</li>
+				<li>
+					<form id="pagRemoverProblemas" method="post" action="ServletProblemas">
+						<input type="hidden" name="pagSelecionada" value="pagRemover" />
+					</form>
+					<a href="#" onClick="redirectRemoverProblemas()">REMOVER</a>
+				</li>
+				<li>
+					<form id="pagAtualizarProblemas" method="post" action="ServletProblemas">
+						<input type="hidden" name="pagSelecionada" value="pagAtualizar" />
+					</form>
+					<a href="#" onClick="redirectAtualizarProblemas()">ATUALIZAR</a>
+				</li>
+				<li>
+					<form id="pagConsultarProblemas" method="post" action="ServletProblemas">
+						<input type="hidden" name="pagSelecionada" value="pagConsultar" />
+					</form>
+					<a href="#" onClick="redirectConsultarProblemas()">CONSULTAR</a>
+				</li>
+			</ul>
+		</li>	
+		<li><a>GERENCIA DE FISCAIS</a>
+			<ul>
+				<li>
+					<form id="pagAdicionarFiscal" method="post" action="ServletFiscal">
+						<input type="hidden" name="pagSelecionada" value="pagInserir" />
+					</form>
+					<a href="#" onClick="redirectAdicionarFiscal()">ADICIONAR</a>
+				</li>
+				<li>
+					<form id="pagRemoverFiscal" method="post" action="ServletFiscal">
+						<input type="hidden" name="pagSelecionada" value="pagRemover" />
+					</form>
+					<a href="#" onClick="redirectRemoverFiscal()">REMOVER</a>
+				</li>
+				<li>
+					<form id="pagAtualizarFiscal" method="post" action="ServletFiscal">
+						<input type="hidden" name="pagSelecionada" value="pagAtualizar" />
+					</form>
+					<a href="#" onClick="redirectAtualizarFiscal()">ATUALIZAR</a>
+				</li>
+				<li>
+					<form id="pagConsultarFiscal" method="post" action="ServletFiscal">
+						<input type="hidden" name="pagSelecionada" value="pagConsultar" />
+					</form>
+					<a href="#" onClick="redirectConsultarFiscal()">CONSULTAR</a>
+				</li>
+			</ul>
+		</li>	
+		<li><a>GERENCIA DE BAIRROS</a>
+			<ul>
+				<li>
+					<form id="pagAdicionarBairros" method="post" action="ServletBairros">
+						<input type="hidden" name="pagSelecionada" value="pagInserir" />
+					</form>
+					<a href="#" onClick="redirectAdicionarBairros()">ADICIONAR</a>
+				</li>
+				<li>
+					<form id="pagRemoverBairros" method="post" action="ServletBairros">
+						<input type="hidden" name="pagSelecionada" value="pagRemover" />
+					</form>
+					<a href="#" onClick="redirectRemoverBairros()">REMOVER</a>
+				</li>
+				<li>
+					<form id="pagAtualizarBairros" method="post" action="ServletBairros">
+						<input type="hidden" name="pagSelecionada" value="pagAtualizar" />
+					</form>
+					<a href="#" onClick="redirectAtualizarBairros()">ATUALIZAR</a>
+				</li>
+				<li>
+					<form id="pagConsultarBairros" method="post" action="ServletBairros">
+						<input type="hidden" name="pagSelecionada" value="pagConsultar" />
+					</form>
+					<a href="#" onClick="redirectConsultarBairros()">CONSULTAR</a>
+				</li>
+			</ul>
+		</li>
+		<li>
+			<form id="pagConsultas" method="post" action="ServletGestor">
+				<input type="hidden" name="pagSelecionada" value="pagConsultar" />
+			</form>
+			<a href="#">CONSULTAS</a>
+		</li>
+	</ul>
+ </nav>	
 
-	<div>
-		<ul id="visualizacao">
-			<li>
-				<ul class="sub1">
-					<li>
-						<form id="pagInserirProblema" method="post" action="ServletFiscal">
-							<input type="hidden" name="pagSelecionada" value="pagInserir" />
-						</form>	
-						<a href="#" onClick="redirectInserirProblema()">Inserir Problema</a>
-					</li>
-					<li>
-						<form id="pagRemoverProblema" method="post" action="ServletProblemas">
-							<input type="hidden" name="pagSelecionada" value="pagRemover" />
-						</form>	
-						<a href="#" onClick="redirectRemoverProblema()">Remover Problema</a>
-					</li>
-					<li>
-						<form id="pagAtualizarProblema" method="post" action="ServletFiscal">
-							<input type="hidden" name="pagSelecionada" value="pagAtualizar" />
-						</form>	
-						<a href="#" onClick="redirectAtualizarProblema()">Atualizar Problema</a>
-					</li>
-					<li>
-						<form id="pagConsultarProblema" method="post" action="ServletProblemas">
-							<input type="hidden" name="pagSelecionada" value="pagConsultar" />
-						</form>	
-						<a href="#" onClick="redirectConsultarProblema()">Consultar Problemas</a>
-					</li>
-				</ul>
-			</li>
-			<li><a>LOCALIZAÇÃO E ESTATÍSTICAS</a></li>
-			<li><a>GERENCIA DE FISCAIS</a></li>
-			<li><a onclick="Logout()">SAIR</a></li>
-		</ul>
-	</div>
-</div>
 </body>
 </html>

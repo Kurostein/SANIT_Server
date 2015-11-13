@@ -14,6 +14,7 @@ import org.json.JSONObject;
 
 import br.com.lorencity.bo.BoGestor;
 import br.com.lorencity.modelo.Endereco;
+import br.com.lorencity.modelo.Estatistica;
 import br.com.lorencity.modelo.Ocorrencia;
 import br.com.lorencity.modelo.TipoDeProblema;
 
@@ -48,7 +49,7 @@ public class ServletGestor extends HttpServlet {
 		String responseString = null;
 		
 		List<Ocorrencia> lista;
-		List<JSONObject> listaJson;
+		List<Estatistica> listaEstatisticas;
 		
 		BoGestor boGestor;
 		
@@ -81,16 +82,14 @@ public class ServletGestor extends HttpServlet {
 				request.setAttribute("listaOcorrenciasPorProblema", lista);
 				break;
 			case "consultarNumeroDeOcorrenciasPorProblema":
-				listaJson = new ArrayList<JSONObject>();			
-				listaJson = boGestor.consultarNumeroDeOcorrenciasPorProblema();
+				listaEstatisticas = boGestor.consultarNumeroDeOcorrenciasPorProblema();
 				
-				request.setAttribute("listaNumeroOcorrenciasPorProblema", listaJson);
+				request.setAttribute("listaEstatisticas", listaEstatisticas);
 				break;
 			case "consultarNumeroDeOcorrenciasPorBairro":
-				listaJson = new ArrayList<JSONObject>();			
-				listaJson = boGestor.consultarNumeroDeOcorrenciasPorBairro();
+				listaEstatisticas = boGestor.consultarNumeroDeOcorrenciasPorBairro();
 				
-				request.setAttribute("listaNumeroOcorrenciasPorBairro", listaJson);
+				request.setAttribute("listaEstatisticas", listaEstatisticas);
 				break;
 			default:
 				responseString = "Filter Error";

@@ -31,3 +31,7 @@
 .center input[type=text]{
 	margin: auto;
 }
+
+.inputReadOnly{
+	background-color: #EEE9E9;
+}
