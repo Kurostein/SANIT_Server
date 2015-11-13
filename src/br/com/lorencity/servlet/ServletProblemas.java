@@ -67,7 +67,7 @@ public class ServletProblemas extends HttpServlet {
 				
 				request.setAttribute("action", "remover");
 				request.setAttribute("listaProblemas", listaProblemas);
-				rd = request.getRequestDispatcher("form-problema.jsp");
+				rd = request.getRequestDispatcher("delete-problema.jsp");
 				rd.forward(request, response);
 				break;
 			case "pagAtualizar":
@@ -111,11 +111,14 @@ public class ServletProblemas extends HttpServlet {
 					problema.setProblema(request.getParameter("problema"));
 					responseString = boProblemas.remover(problema);
 					
+					listaProblemas = boProblemas.listarProblemas();
+					
 					action = "remover";
 					
 					request.setAttribute("action", action);
+					request.setAttribute("listaProblemas", listaProblemas);
 					request.setAttribute("responseMessage", responseString);
-					rd = request.getRequestDispatcher("form-problema.jsp");
+					rd = request.getRequestDispatcher("delete-problema.jsp");
 					rd.forward(request, response);
 					break;
 				case "atualizar":

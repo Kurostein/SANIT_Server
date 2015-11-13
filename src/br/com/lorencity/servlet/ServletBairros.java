@@ -65,7 +65,7 @@ public class ServletBairros extends HttpServlet {
 				
 				request.setAttribute("action", "remover");
 				request.setAttribute("listaBairros", listaBairros);
-				rd = request.getRequestDispatcher("form-bairro.jsp");
+				rd = request.getRequestDispatcher("delete-bairro.jsp");
 				rd.forward(request, response);
 				break;
 			case "pagAtualizar":
@@ -80,7 +80,7 @@ public class ServletBairros extends HttpServlet {
 				listaBairros = boBairros.listarBairros();
 				
 				request.setAttribute("listaBairros", listaBairros);
-				rd = request.getRequestDispatcher("form-bairro.jsp");
+				rd = request.getRequestDispatcher("consulta-bairro.jsp");
 				rd.forward(request, response);
 				break;
 			default:
@@ -108,11 +108,14 @@ public class ServletBairros extends HttpServlet {
 					bairro.setNome(request.getParameter("bairro"));
 					responseString = boBairros.remover(bairro);
 					
+					listaBairros = boBairros.listarBairros();
+					
 					action = "remover";
 					
+					request.setAttribute("listaBairros", listaBairros);
 					request.setAttribute("action", action);
 					request.setAttribute("responseMessage", responseString);
-					rd = request.getRequestDispatcher("form-bairro.jsp");
+					rd = request.getRequestDispatcher("delete-bairro.jsp");
 					rd.forward(request, response);
 					break;
 				case "atualizar":

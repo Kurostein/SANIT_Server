@@ -64,7 +64,7 @@ public class ServletFiscal extends HttpServlet {
 				
 				request.setAttribute("action", "remover");
 				request.setAttribute("listaFiscais", listaFiscais);
-				rd = request.getRequestDispatcher("form-fiscal.jsp");
+				rd = request.getRequestDispatcher("delete-fiscal.jsp");
 				rd.forward(request, response);
 				break;
 			case "pagAtualizar":
@@ -110,11 +110,14 @@ public class ServletFiscal extends HttpServlet {
 					fiscal.setMatricula(Integer.parseInt(request.getParameter("matricula")));
 					responseString = boFiscal.remover(fiscal);
 					
+					listaFiscais = boFiscal.listarFiscais();
+
 					action = "remover";
 					
 					request.setAttribute("action", action);
+					request.setAttribute("listaFiscais", listaFiscais);
 					request.setAttribute("responseMessage", responseString);
-					rd = request.getRequestDispatcher("remove-fiscal.jsp");
+					rd = request.getRequestDispatcher("delete-fiscal.jsp");
 					rd.forward(request, response);
 					break;
 				case "atualizar":

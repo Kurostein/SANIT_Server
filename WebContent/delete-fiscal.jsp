@@ -7,7 +7,7 @@
     <head>
 	  	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 
-	  	<title>Formulário de Bairros</title>
+	  	<title>Deletar Fiscal</title>
 
 		<link rel="stylesheet" href="css/border.css">
 	  	<link rel="stylesheet" href="css/page-layout.css">
@@ -34,39 +34,21 @@
 			    	</form>
 	   			</c:if>
 
-				<c:if test="${action == 'atualizar'}">
-					<fieldset>
-						<legend>Lista de Bairros:</legend>
-						<form id="consultarBairro" method="post" action="ServletBairros">
-							<input type="hidden" name="action" value="consultarBairro" />
-			    			<select name="id">
-			    				<option value="">- Selecione um Bairro -</option>
-			    				<c:forEach var="bairro" items="${listaBairros}">
-			    					<option value="${bairro.id}">${bairro.nome}</option>
-			    				</c:forEach>
-			    			</select>
-			    		</form>
-					<button class="button" type="submit" form="consultarBairro" value="Submit">Escolher</button>
-		    		</fieldset>    		
-	   			</c:if>
-
-				<form id="form_bairro" action="ServletBairros" method="post">
-					<fieldset class="input_style">
-						<input type="hidden" name="action" value="${action}" />
-
-						<legend>Informações do Bairro:</legend>
-							
-						<input type="hidden" name="id" value="${bairro.id}">	
-
-						<label>Bairro:</label>
-						<input type="text" name="bairro" size="50" value="${bairro.nome}" maxlength="50" placeholder="Nome do bairro" required>
-					</fieldset>
-				</form>
-
-		  		<div class="button-box">
-					<button class="button" type="submit" form="form_bairro" value="Submit">Salvar</button>
+				<fieldset>
+					<legend>Lista de Fiscais:</legend>
+					<form id="removerFiscal" method="post" action="ServletFiscal">
+						<input type="hidden" name="action" value="remover" />
+			    		<select name="matricula">
+			    			<option value="">- Selecione um Fiscal -</option>
+			    			<c:forEach var="fiscal" items="${listaFiscais}">
+			    				<option value="${fiscal.matricula}">${fiscal.matricula} - ${fiscal.nome}</option>
+			    			</c:forEach>
+			    		</select>
+			    	</form>
+					<button class="button" type="submit" form="removerFiscal" value="Submit">Remover</button>
 					<button class="button" type="button" value="redirect" onClick="redirectMenu()">Voltar ao Menu</button>  
-				</div>
+		    	</fieldset>    		
+
 			</div>
 
 			<div class="footer">

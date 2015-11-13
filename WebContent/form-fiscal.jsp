@@ -87,8 +87,8 @@
 
 			<div class="footer">
 				<footer>
-					<h3>Programação Orientada a Objetos II.</h3>
-					<p>Projeto de vendas para avaliação do curso.</p>
+					<h3>Projeto SANIT</h3>
+					<p>Lorencity</p>
 				</footer>
 			</div>	
 	  </div>

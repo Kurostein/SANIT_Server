@@ -28,10 +28,32 @@
 	outline:none;
 }
 
-.center input[type=text]{
-	margin: auto;
-}
-
 .inputReadOnly{
 	background-color: #EEE9E9;
+}
+
+.input_table{
+	border: 1px solid #e3e3e3;
+	width: 350px;
+	text-align: left;
+	padding: 5px;
+	background: none;
+}
+
+.div_size fieldset{
+	margin: 20px auto;
+}
+
+.field_size{
+	width: 500px;
+	padding: 10px;
+	border-radius:10px;
+	background-color: #A2F9F9;
+	font: normal 13px sans-serif;
+}
+
+p.table_border {
+	outline: 1px solid;
+	margin: 2px;
+	padding: 5px;
 }

@@ -27,7 +27,7 @@ div.UserKey{
     	
 }
 
-header.cabecalho{
+div.cabecalho, header.cabecalho{
 	position: center;
 	top: 1px;
 	left: 400px;
