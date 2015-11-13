@@ -16,8 +16,8 @@
 </div>
 <div  class="menu">
 	<ul id="visualizacao" class="listaInicio">
-		<li><a href="http://localhost:8080/AndroidWeb/Inicio.jsp">INICIO</a></li>
-		<li><a href="http://localhost:8080/AndroidWeb/Login.jsp">SAIR</a></li>
+		<li><a href="http://localhost:8080/SANIT/Inicio.jsp">INICIO</a></li>
+		<li><a href="http://localhost:8080/SANIT/Login.jsp">SAIR</a></li>
 	</ul>
 </div>
 <div class="opcoesPesquisa">

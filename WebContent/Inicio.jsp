@@ -7,6 +7,7 @@
 	<link rel="stylesheet" href="css/style.css">
 	<title>Inicio</title>
 	<script type="text/javascript" src="js/scripts.js"></script>
+	<script type="text/javascript" src="js/redirectFunction.js"></script>
 </head>
 <body>
 <div class="cabecalho">
@@ -14,10 +15,15 @@
 </div>
 <div  class="menu">
 	<ul id="visualizacao" class="listaInicio">
-		<li><a href="http://localhost:8080/AndroidWeb/GerenciaProblemas.jsp">GERENCIA DE TIPOS DE PROBLEMA</a></li>
-		<li><a href="http://localhost:8080/AndroidWeb/Localizacao.jsp">LOCALIZAÇÃO E ESTATÍSTICAS</a></li>
-		<li><a href="http://localhost:8080/AndroidWeb/Gerencia.jsp">GERENCIA DE FISCAIS</a></li>
-		<li><a href="http://localhost:8080/AndroidWeb/Login.jsp">SAIR</a></li>
+		<li>
+					<form id="pagAtualizarProblema" method="post" action="ServletProblemas">
+						<input type="hidden" name="pagSelecionada" value="pagAtualizar" />
+					</form>	
+					<a href="#" onClick="redirectAtualizarProblema()">Atualizar Problema</a>
+		</li>
+		<li><a>LOCALIZAÇÃO E ESTATÍSTICAS</a></li>
+		<li><a>GERENCIA DE FISCAIS</a></li>
+		<li><a onclick="Logout()">SAIR</a></li>
 	</ul>
 </div>
 </body>

@@ -1,0 +1,45 @@
+#login-box fieldset{
+	text-align: left;
+}
+
+.nome {
+	width: 8.5cm;
+	border-radius: 5px;
+}
+
+.quantidade{
+	width: 3cm;
+	border-radius: 5px;
+}
+
+/*Atributo valor*/
+.vlr{ 
+	width: 2.5cm;
+	border-radius: 5px;
+}
+
+/*data (cadastro de produtos, cadastro de cliente, venda)*/
+.dt{
+	width: 3.5cm;
+	border-radius: 5px;
+}
+
+/*Para as áreas que são únicas*/
+.area_texto{
+	width: 5cm;
+	border-radius: 5px;
+}
+.produto{
+	width: 8.5cm;
+	border-radius: 5px;
+}
+
+#mail{
+	width: 8cm;
+	border-radius: 3px;
+}
+#senha{
+	width: 5cm;
+	border-radius: 5px;
+}
+

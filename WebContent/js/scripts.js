@@ -74,3 +74,20 @@ function escolherGrafico(){
 	else
 		alert("Escolha uma opção de grafico!");
 }
+
+function validarLogin() {
+	var postID = document.getElementById("usuario").value;
+	var postPass = document.getElementById("senha").value;
+	
+	if (postID == null || postID == '') {
+		alert('Digite um usuário!');
+	}else if (postPass == null || postPass == ''){
+		alert('Digite uma senha!')
+	}else{
+		document.forms['login'].submit();
+	}
+}
+
+function Logout(){
+    document.getElementById("logout").submit();
+}

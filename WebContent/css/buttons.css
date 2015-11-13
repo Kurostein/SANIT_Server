@@ -1,0 +1,29 @@
+.button{
+	background: #cc0000;
+	padding: 6px 12px;
+	color: white;
+	border: 1px solid #cc0000;
+	margin-top: 10px;
+}
+
+.button:hover{
+	background-color: #cc3300;
+	cursor: pointer;
+}
+
+.logout-button{
+	font-family: Arial;
+	font-size: 15px;
+	font-style: italic;
+	width: 120px;
+}
+
+.button-box{
+	text-align: center;
+	margin: center;
+}
+
+.button-box{
+	text-align: center;
+	margin: center;
+}

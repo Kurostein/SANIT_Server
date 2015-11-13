@@ -34,12 +34,27 @@ public class BoProblemas {
 		
 		return sJson;
 	}
+	
+	public TipoDeProblema consultarProblema(TipoDeProblema problema) {
+		try{
+			ProblemasDAO problemasDAO = new ProblemasDAO();
+			problema = problemasDAO.consultarProblema(problema);
+		}catch(SQLException e){
+			System.err.println("Problema na conexão com o banco.");
+			throw new RuntimeException("Problema na conexão com o banco.", e);
+		}catch (NamingException e) {
+			System.err.println("Problema na conexão com o banco.");
+			throw new RuntimeException("Problema na conexão com o banco.", e);
+		}
+				
+		return problema;
+	}
 
-	public List<TipoDeProblema> consultarProblemas() {
+	public List<TipoDeProblema> listarProblemas() {
 		List<TipoDeProblema> listaProblemas;
 		try{
 			ProblemasDAO problemasDAO = new ProblemasDAO();
-			listaProblemas = problemasDAO.consultarProblemas();
+			listaProblemas = problemasDAO.listarProblemas();
 		}catch(SQLException e){
 			System.err.println("Problema na conexão com o banco.");
 			throw new RuntimeException("Problema na conexão com o banco.", e);

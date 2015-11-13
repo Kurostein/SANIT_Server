@@ -1,11 +1,15 @@
 package br.com.lorencity.servlet;
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+
 
 /**
  * Servlet implementation class ServletLogin
@@ -27,6 +31,7 @@ public class ServletLogin extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		this.doPost(request, response);
 	}
 
 	/**
@@ -34,6 +39,18 @@ public class ServletLogin extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		String act = request.getParameter("action");
+		
+		if(act.equals("login")){
+			//String user = request.getParameter("usuario");
+			//HttpSession session = request.getSession(true);
+			//session.setAttribute("usuariologado", user);	//coloca o usuário na sessão;
+			response.sendRedirect("/Sanit/Inicio.jsp");
+		} else if(act.equals("logout")){
+			//HttpSession session = request.getSession();
+			//session.invalidate();
+			response.sendRedirect("/Sanit/Login.jsp");
+		}
 	}
 
 }

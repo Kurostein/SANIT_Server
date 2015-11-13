@@ -56,8 +56,10 @@ public class ProblemasDAO {
 	}
 	
 	public void atualizar(TipoDeProblema problema) throws SQLException{
-		String sql = "UPDATE problemas SET tipo_problema = '"+problema.getProblema()
-				+ "'WHERE id_problema = "+problema.getId()+";";
+		String sql = "UPDATE problemas "
+				+ "SET tipo_problema = '"+problema.getProblema()+"', "
+				+ "prioridade = "+problema.getPrioridade()
+				+ " WHERE id_problema = "+problema.getId()+";";
 		
 		Statement stmt = conn.createStatement();
 		stmt.execute(sql);
@@ -68,7 +70,7 @@ public class ProblemasDAO {
 		conn.close();
 	}
 	
-	public List<TipoDeProblema> consultarProblemas() throws SQLException{
+	public List<TipoDeProblema> listarProblemas() throws SQLException{
 		List<TipoDeProblema> listaProblemas;
 		TipoDeProblema problema;
 		
@@ -92,6 +94,27 @@ public class ProblemasDAO {
 		rs.close();
 		
 		return listaProblemas;
+	}
+	
+	public TipoDeProblema consultarProblema(TipoDeProblema problema) throws SQLException{
+	
+		String sql = "SELECT * FROM problemas WHERE id_problema = "+problema.getId()+";";
+		
+		PreparedStatement stmt = conn.prepareStatement(sql);
+		ResultSet rs = stmt.executeQuery();
+		
+		rs.next();
+
+		problema = new TipoDeProblema();
+		problema.setId(rs.getInt("id_problema"));
+		problema.setProblema(rs.getString("tipo_problema"));
+		problema.setPrioridade(rs.getInt("prioridade"));
+
+		stmt.close();
+		conn.close();
+		rs.close();
+		
+		return problema;
 	}
 	
 	public JSONArray consultarProblemasJson() throws SQLException{
