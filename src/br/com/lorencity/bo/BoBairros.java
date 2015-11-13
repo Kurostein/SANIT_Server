@@ -36,11 +36,11 @@ public class BoBairros {
 		return sJson;
 	}
 
-	public List<Bairro> consultarBairros() {
+	public List<Bairro> listarBairros() {
 		List<Bairro> listaBairros;
 		try{
 			BairrosDAO bairrosDAO = new BairrosDAO();
-			listaBairros = bairrosDAO.consultarBairros();
+			listaBairros = bairrosDAO.listarBairros();
 		}catch(SQLException e){
 			System.err.println("Problema na conexão com o banco.");
 			throw new RuntimeException("Problema na conexão com o banco.", e);
@@ -101,5 +101,22 @@ public class BoBairros {
 			System.err.println("Problema na conexão com o banco.");
 			throw new RuntimeException("Problema na conexão com o banco.", e);
 		}
+	}
+	
+	public Bairro consultarBairro(Bairro bairro) {
+		BairrosDAO bairrosDAO;
+		
+		try{
+			bairrosDAO = new BairrosDAO();
+			bairro = bairrosDAO.consultarBairro(bairro);
+		}catch(SQLException e){
+			System.err.println("Problema na conexão com o banco.");
+			throw new RuntimeException("Problema na conexão com o banco.", e);
+		}catch (NamingException e) {
+			System.err.println("Problema na conexão com o banco.");
+			throw new RuntimeException("Problema na conexão com o banco.", e);
+		}
+				
+		return bairro;
 	}
 }

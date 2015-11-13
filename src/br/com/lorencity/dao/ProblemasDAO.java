@@ -31,7 +31,7 @@ public class ProblemasDAO {
 	}
 	
 	public void inserir(TipoDeProblema problema) throws SQLException{
-		String sql = "INSERT INTO problemas (problema, prioridade) "
+		String sql = "INSERT INTO problemas (tipo_problema, prioridade) "
 				+ "VALUES ('"+problema.getProblema()+"', '"+problema.getPrioridade()+"');";
 		
 		Statement stmt = conn.createStatement();
@@ -44,7 +44,7 @@ public class ProblemasDAO {
 	}
 	
 	public void remover(TipoDeProblema problema) throws SQLException{
-		String sql = "DELETE FROM problemas WHERE problema = '"+problema.getProblema()+"';";
+		String sql = "DELETE FROM problemas WHERE tipo_problema = '"+problema.getProblema()+"';";
 		
 		Statement stmt = conn.createStatement();
 		stmt.execute(sql);

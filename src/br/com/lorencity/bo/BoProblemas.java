@@ -107,7 +107,7 @@ public class BoProblemas {
 			problemasDAO = new ProblemasDAO();
 			problemasDAO.inserir(problema);
 			
-			return "Problema removido com sucesso!";
+			return "Problema adicionado com sucesso!";
 		}catch(SQLException e){
 			System.err.println("Problema na conexão com o banco.");
 			throw new RuntimeException("Problema na conexão com o banco.", e);

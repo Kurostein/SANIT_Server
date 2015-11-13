@@ -24,5 +24,4 @@ public class Fiscal extends Usuario{
 	public void setSenha(String senha) {
 		this.senha = senha.trim();
 	}
-	
 }

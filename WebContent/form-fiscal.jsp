@@ -7,7 +7,7 @@
     <head>
 	  	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 
-	  	<title>Formulário de Problemas</title>
+	  	<title>Formulário de Fiscais</title>
 
 		<link rel="stylesheet" href="css/border.css">
 	  	<link rel="stylesheet" href="css/page-layout.css">
@@ -36,38 +36,51 @@
 
 				<c:if test="${action == 'atualizar'}">
 					<fieldset>
-						<legend>Lista de Problemas:</legend>
-						<form id="consultarProblema" method="post" action="ServletProblemas">
-							<input type="hidden" name="action" value="consultarProblema" />
-			    			<select name="id">
-			    				<option value="">- Selecione um Problema -</option>
-			    				<c:forEach var="problema" items="${listaProblemas}">
-			    					<option value="${problema.id}">${problema.problema}</option>
+						<legend>Lista de Fiscais:</legend>
+						<form id="consultarFiscal" method="post" action="ServletFiscal">
+							<input type="hidden" name="action" value="consultarFiscal" />
+			    			<select name="matricula">
+			    				<option value="">- Selecione um Fiscal -</option>
+			    				<c:forEach var="fiscal" items="${listaFiscais}">
+			    					<option value="${fiscal.matricula}">${fiscal.matricula} - ${fiscal.nome}</option>
 			    				</c:forEach>
 			    			</select>
 			    		</form>
-					<button class="button" type="submit" form="consultarProblema" value="Submit">Escolher</button>
+					<button class="button" type="submit" form="consultarFiscal" value="Submit">Escolher</button>
 		    		</fieldset>    		
 	   			</c:if>
 
-				<form id="form_problema" action="ServletProblemas" method="post">
+				<form id="form_fiscal" action="ServletFiscal" method="post">
 					<fieldset class="input_style">
 						<input type="hidden" name="action" value="${action}" />
 
-						<legend>Informações do Problema:</legend>
+						<legend>Informações do Fiscal:</legend>
 							
-						<input type="hidden" name="id" value="${problema.id}">	
-
-						<label >Problema:</label>
-						<input type="text" name="problema" size="50" value="${problema.problema}" maxlength="50" placeholder="Tipo de problema" required>
+						<label>Nome:</label>
+						<input type="text" name="nome" size="50" value="${fiscal.nome}" maxlength="50" placeholder="Nome do fiscal" required>
 						<br><br>
-						<label >Prioridade:</label>
-						<input type="number" name="prioridade" min="1" max="10" value="${problema.prioridade}" maxlength="2" placeholder="Mínima 1 e máxima 10" required>
+						<label>CPF:</label>
+						<input type="text" name="cpf" value="${fiscal.cpf}" maxlength="11" placeholder="Apenas os números do CPF" required>
+						<br><br>
+
+						<c:if test="${action == 'atualizar'}">
+							<label>Matrícula:</label>
+							<input type="number" name="matricula" value="${fiscal.matricula}" placeholder="Número da matrícula" readonly>
+	   					</c:if>
+
+						<c:if test="${action == 'inserir'}">
+							<label>Matrícula:</label>
+							<input type="number" name="matricula" value="${fiscal.matricula}" placeholder="Número da matrícula" required>
+	   					</c:if>
+
+						<br><br>
+						<label>Senha:</label>
+						<input type="text" name="senha" value="${fiscal.senha}" placeholder="Senha de acesso">
 					</fieldset>
 				</form>
 
 		  		<div class="button-box">
-					<button class="button" type="submit" form="form_problema" value="Submit">Salvar</button>
+					<button class="button" type="submit" form="form_fiscal" value="Submit">Salvar</button>
 					<button class="button" type="button" value="redirect" onClick="redirectMenu()">Voltar ao Menu</button>  
 				</div>
 			</div>

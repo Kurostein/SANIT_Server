@@ -33,16 +33,13 @@ public class FiscalDAO {
 	public void inserir(Usuario usuario) throws SQLException{
 		Fiscal fiscal = (Fiscal) usuario;
 		
-		String sql = "INSERT INTO fiscais (cpf, nome, matricula, senha) "
-				+ "VALUES ('?', '?', '?', '?');";
+		String sql = "INSERT INTO fiscais (cpf, nome, matricula, senha) VALUES "
+				+ "('"+ fiscal.getCpf() +"', "
+				+ "'"+ fiscal.getNome() +"', "
+				+ fiscal.getMatricula() +", "
+				+ "'"+ fiscal.getSenha() +"');";
 		
 		PreparedStatement stmt = conn.prepareStatement(sql);
-		
-		stmt.setString(1, fiscal.getCPF());
-		stmt.setString(2, fiscal.getNome());
-		stmt.setInt(3, fiscal.getMatricula());
-		stmt.setString(4, fiscal.getSenha());
-		
 		stmt.executeUpdate(sql);
 		
 		System.out.println("Usuário inserido no banco!");
@@ -54,7 +51,7 @@ public class FiscalDAO {
 	public void remover(Usuario usuario) throws SQLException{
 		Fiscal fiscal = (Fiscal) usuario;
 		
-		String sql = "DELETE FROM fiscais WHERE matricula = '"+fiscal.getMatricula()+"';";
+		String sql = "DELETE FROM fiscais WHERE matricula = "+fiscal.getMatricula()+";";
 		
 		Statement stmt = conn.createStatement();
 		stmt.execute(sql);
@@ -68,12 +65,20 @@ public class FiscalDAO {
 	public void atualizar(Usuario usuario) throws SQLException{
 		Fiscal fiscal = (Fiscal) usuario;
 		
-		String sql = "UPDATE fiscais "
-				+ "SET cpf = '"+fiscal.getCPF()+"', "
-				+ "nome = '"+fiscal.getNome()+"', "
-				+ "matricula = "+fiscal.getMatricula()+"', "
-				+ "senha = '"+fiscal.getSenha()
-				+ "WHERE id_fiscal = "+fiscal.getId()+";";
+		String sql;
+		
+		if(fiscal.getSenha() != null && !fiscal.getSenha().equals("")){
+			sql = "UPDATE fiscais "
+					+ "SET cpf = '"+fiscal.getCpf()+"', "
+					+ "nome = '"+fiscal.getNome()+"', "
+					+ "senha = '"+fiscal.getSenha()+"' "
+					+ "WHERE matricula = "+fiscal.getMatricula()+";";
+		} else{
+			sql = "UPDATE fiscais "
+					+ "SET cpf = '"+fiscal.getCpf()+"', "
+					+ "nome = '"+fiscal.getNome()+"' "
+					+ "WHERE matricula = "+fiscal.getMatricula()+";";
+		}
 		
 		Statement stmt = conn.createStatement();
 		stmt.execute(sql);
@@ -84,7 +89,7 @@ public class FiscalDAO {
 		conn.close();
 	}
 	
-	public List<Fiscal> consultarFiscais() throws SQLException{
+	public List<Fiscal> listarFiscais() throws SQLException{
 		List<Fiscal> listaUsuarios;
 		Fiscal fiscal;
 		
@@ -97,11 +102,10 @@ public class FiscalDAO {
 		
 		while(rs.next()){
 			fiscal = new Fiscal();
-			fiscal.setId(rs.getInt("id_fiscal"));
 			fiscal.setNome(rs.getString("nome"));
-			fiscal.setCPF(rs.getString("cpf"));
+			fiscal.setCpf(rs.getString("cpf"));
 			fiscal.setMatricula(Integer.parseInt(rs.getString("matricula")));
-			fiscal.setSenha(rs.getString("senha"));
+			//fiscal.setSenha(rs.getString("senha"));
 			
 			listaUsuarios.add(fiscal);
 		}
@@ -111,5 +115,26 @@ public class FiscalDAO {
 		rs.close();
 		
 		return listaUsuarios;
+	}
+	
+	public Fiscal consultarFiscal(Fiscal fiscal) throws SQLException{
+		
+		String sql = "SELECT * FROM fiscais WHERE matricula = "+fiscal.getMatricula()+";";
+		
+		PreparedStatement stmt = conn.prepareStatement(sql);
+		ResultSet rs = stmt.executeQuery();
+		
+		rs.next();
+		
+		fiscal = new Fiscal();
+		fiscal.setNome(rs.getString("nome"));
+		fiscal.setCpf(rs.getString("cpf"));
+		fiscal.setMatricula(Integer.parseInt(rs.getString("matricula")));
+
+		stmt.close();
+		conn.close();
+		rs.close();
+		
+		return fiscal;
 	}
 }

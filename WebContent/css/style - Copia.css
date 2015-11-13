@@ -27,9 +27,11 @@ div.UserKey{
     	
 }
 
-header.cabecalho{
-	text-align: center;
-	margin-bottom: 50px;
+div.cabecalho{
+	position: absolute;
+	position: center;
+	top: 1px;
+	left: 400px;
 }
 
 div.mapa{
@@ -119,12 +121,17 @@ input.funcionario{
 		
 }
 
-ul#visualizacao, ul.sub1{
+ul.listaInicio{
+	position:absolute;
 	list-style-type:none;
+	top:220px;
+}
+
+ul#visualizacao{
 	left:10px;
 }
 
-ul#visualizacao li{
+ul#visualizacao li li{
 	display: block;
 	text-align: center;
 	position: relative;

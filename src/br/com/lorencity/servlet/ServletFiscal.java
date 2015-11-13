@@ -3,6 +3,7 @@ package br.com.lorencity.servlet;
 import java.io.IOException;
 import java.util.List;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -40,52 +41,138 @@ public class ServletFiscal extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		String action = request.getParameter("action");
-		Fiscal fiscal = null;
+		String pagSelecionada = request.getParameter("pagSelecionada");
 		String responseString = null;
 		
-		BoFiscal boFiscal;
+		RequestDispatcher rd;
 		
-		try{
+		BoFiscal boFiscal;
+		Fiscal fiscal = null;
+		List<Fiscal> listaFiscais;
+		
+		if(pagSelecionada != null && !pagSelecionada.equals("")){
 			boFiscal = new BoFiscal();
 			
-			switch (action) {
-			case "inserir":
-				fiscal = new Fiscal();
-				fiscal.setNome(request.getParameter("nome"));
-				fiscal.setCPF(request.getParameter("cpf"));
-				fiscal.setMatricula(Integer.parseInt(request.getParameter("matricula")));
-				fiscal.setSenha(request.getParameter("senha"));
-				responseString = boFiscal.inserir(fiscal);
+			switch (pagSelecionada) {
+			case "pagInserir":
+				request.setAttribute("action", "inserir");
+				rd = request.getRequestDispatcher("form-fiscal.jsp");
+				rd.forward(request, response);
 				break;
-			case "remover":
-				fiscal = new Fiscal();
-				fiscal.setMatricula(Integer.parseInt(request.getParameter("matricula")));
-				responseString = boFiscal.remover(fiscal);
-				break;
-			case "atualizar":
-				fiscal = new Fiscal();
-				fiscal.setCPF(request.getParameter("cpf"));
-				fiscal.setNome(request.getParameter("nome"));
-				fiscal.setMatricula(Integer.parseInt(request.getParameter("matricula")));
-				fiscal.setSenha(request.getParameter("senha"));
-				break;
-			case "consultarFiscais":
-				List<Fiscal> listaFiscais;
-				listaFiscais = boFiscal.consultarFiscais();
+			case "pagRemover":
+				listaFiscais = boFiscal.listarFiscais();
 				
-				//setar no request
+				request.setAttribute("action", "remover");
+				request.setAttribute("listaFiscais", listaFiscais);
+				rd = request.getRequestDispatcher("form-fiscal.jsp");
+				rd.forward(request, response);
+				break;
+			case "pagAtualizar":
+				listaFiscais = boFiscal.listarFiscais();
+				
+				request.setAttribute("listaFiscais", listaFiscais);
+				request.setAttribute("action", "atualizar");
+				rd = request.getRequestDispatcher("form-fiscal.jsp");
+				rd.forward(request, response);
+				break;
+			case "pagConsultar":
+				listaFiscais = boFiscal.listarFiscais();
+				
+				request.setAttribute("listaFiscais", listaFiscais);
+				rd = request.getRequestDispatcher("form-fiscal.jsp");
+				rd.forward(request, response);
 				break;
 			default:
-				responseString = "Filter Error";
 				break;
 			}
-			
-		}catch(RuntimeException e){
-			responseString = e.getMessage();
-			e.printStackTrace();
+		}else if(action != null && !action.equals("")){
+			try{				
+				boFiscal = new BoFiscal();
+				
+				switch (action) {
+				case "inserir":
+					fiscal = new Fiscal();
+					fiscal.setNome(request.getParameter("nome"));
+					fiscal.setCpf(request.getParameter("cpf"));
+					fiscal.setMatricula(Integer.parseInt(request.getParameter("matricula")));
+					fiscal.setSenha(request.getParameter("senha"));
+					responseString = boFiscal.inserir(fiscal);
+					
+					action = "inserir";
+					
+					request.setAttribute("action", action);
+					request.setAttribute("responseMessage", responseString);
+					rd = request.getRequestDispatcher("form-fiscal.jsp");
+					rd.forward(request, response);
+					break;
+				case "remover":
+					fiscal = new Fiscal();
+					fiscal.setMatricula(Integer.parseInt(request.getParameter("matricula")));
+					responseString = boFiscal.remover(fiscal);
+					
+					action = "remover";
+					
+					request.setAttribute("action", action);
+					request.setAttribute("responseMessage", responseString);
+					rd = request.getRequestDispatcher("remove-fiscal.jsp");
+					rd.forward(request, response);
+					break;
+				case "atualizar":
+					fiscal = new Fiscal();
+					fiscal.setNome(request.getParameter("nome"));
+					fiscal.setCpf(request.getParameter("cpf"));
+					fiscal.setMatricula(Integer.parseInt(request.getParameter("matricula")));
+					fiscal.setSenha(request.getParameter("senha"));
+					
+					responseString = boFiscal.atualizar(fiscal);
+					
+					listaFiscais = boFiscal.listarFiscais();
+					
+					action = "atualizar";
+					
+					request.setAttribute("action", action);
+					request.setAttribute("listaFiscais", listaFiscais);
+					request.setAttribute("responseMessage", responseString);
+					rd = request.getRequestDispatcher("form-fiscal.jsp");
+					rd.forward(request, response);
+					break;
+				case "listarFiscais":
+					listaFiscais = boFiscal.listarFiscais();
+					
+					request.setAttribute("listaFiscais", listaFiscais);
+					rd = request.getRequestDispatcher("form-fiscal.jsp");
+					rd.forward(request, response);					
+					break;
+				case "consultarFiscal":
+					fiscal = new Fiscal();
+					fiscal.setMatricula(Integer.parseInt(request.getParameter("matricula")));
+					fiscal = boFiscal.consultarFiscal(fiscal);
+					
+					listaFiscais = boFiscal.listarFiscais();
+					
+					action = "atualizar";
+							
+					request.setAttribute("listaFiscais", listaFiscais);
+					request.setAttribute("fiscal", fiscal);
+					request.setAttribute("action", action);
+					rd = request.getRequestDispatcher("form-fiscal.jsp");
+					rd.forward(request, response);
+					break;
+				default:
+					responseString = "Filter Error";
+					break;
+				}
+				
+			}catch(RuntimeException e){
+				responseString = e.getMessage();
+				e.printStackTrace();
+				
+				request.setAttribute("responseMessage", responseString);
+				rd = request.getRequestDispatcher("form-fiscal.jsp");
+				rd.forward(request, response);
+			}
 		}
-		
-		//retorno para a página e setar atributos
+
 		System.out.println("Resposta enviada com sucesso.");
 	}
 

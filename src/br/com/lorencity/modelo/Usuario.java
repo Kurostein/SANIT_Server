@@ -17,11 +17,11 @@ public class Usuario {
 		this.nome = nome.trim();
 	}
 
-	public String getCPF() {
+	public String getCpf() {
 		return this.CPF;
 	}
 
-	public void setCPF(String CPF) {
+	public void setCpf(String CPF) {
 		this.CPF = CPF.trim();
 	}
 

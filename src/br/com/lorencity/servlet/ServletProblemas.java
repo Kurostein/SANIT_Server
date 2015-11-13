@@ -99,6 +99,9 @@ public class ServletProblemas extends HttpServlet {
 					problema.setPrioridade(Integer.parseInt(request.getParameter("prioridade")));
 					responseString = boProblemas.inserir(problema);
 					
+					action = "inserir";
+					
+					request.setAttribute("action", action);
 					request.setAttribute("responseMessage", responseString);
 					rd = request.getRequestDispatcher("form-problema.jsp");
 					rd.forward(request, response);
@@ -108,6 +111,9 @@ public class ServletProblemas extends HttpServlet {
 					problema.setProblema(request.getParameter("problema"));
 					responseString = boProblemas.remover(problema);
 					
+					action = "remover";
+					
+					request.setAttribute("action", action);
 					request.setAttribute("responseMessage", responseString);
 					rd = request.getRequestDispatcher("form-problema.jsp");
 					rd.forward(request, response);
@@ -146,7 +152,6 @@ public class ServletProblemas extends HttpServlet {
 					break;
 				case "consultarProblema":
 					problema = new TipoDeProblema();
-					System.out.println("id "+request.getParameter("id"));
 					problema.setId(Integer.parseInt(request.getParameter("id")));
 					problema = boProblemas.consultarProblema(problema);
 					

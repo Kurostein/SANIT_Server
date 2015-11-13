@@ -27,3 +27,7 @@
 	border:1px solid white;
 	outline:none;
 }
+
+.center input[type=text]{
+	margin: auto;
+}

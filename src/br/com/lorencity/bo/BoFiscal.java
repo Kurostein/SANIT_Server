@@ -15,12 +15,12 @@ public class BoFiscal {
 		
 	}
 
-	public List<Fiscal> consultarFiscais() {
+	public List<Fiscal> listarFiscais() {
 		List<Fiscal> listaFiscais;
 		FiscalDAO fiscalDAO;
 		try{
 			fiscalDAO = new FiscalDAO();
-			listaFiscais = fiscalDAO.consultarFiscais();
+			listaFiscais = fiscalDAO.listarFiscais();
 		}catch(SQLException e){
 			System.err.println("Problema na conexão com o banco.");
 			throw new RuntimeException("Problema na conexão com o banco.", e);
@@ -31,13 +31,35 @@ public class BoFiscal {
 				
 		return listaFiscais;
 	}
+	
+	public Fiscal consultarFiscal(Usuario usuario) {
+		FiscalDAO fiscalDAO;
+		Fiscal fiscal;
+		try{
+			fiscal = (Fiscal) usuario;
+			
+			fiscalDAO = new FiscalDAO();
+			fiscal = fiscalDAO.consultarFiscal(fiscal);
+		}catch(SQLException e){
+			System.err.println("Problema na conexão com o banco.");
+			throw new RuntimeException("Problema na conexão com o banco.", e);
+		}catch (NamingException e) {
+			System.err.println("Problema na conexão com o banco.");
+			throw new RuntimeException("Problema na conexão com o banco.", e);
+		}
+				
+		return fiscal;
+	}
 
 	public String atualizar(Usuario usuario) {
 		FiscalDAO fiscalDAO;
+		Fiscal fiscal;
 		
 		try{
+			fiscal = (Fiscal) usuario;
+			
 			fiscalDAO = new FiscalDAO();
-			fiscalDAO.remover(usuario);
+			fiscalDAO.atualizar(fiscal);
 			
 			return "Usuário atualizado com sucesso!";
 		}catch(SQLException e){
@@ -51,10 +73,13 @@ public class BoFiscal {
 
 	public String remover(Usuario usuario) {
 		FiscalDAO fiscalDAO;
+		Fiscal fiscal;
 		
 		try{
+			fiscal = (Fiscal) usuario;
+			
 			fiscalDAO = new FiscalDAO();
-			fiscalDAO.remover(usuario);
+			fiscalDAO.remover(fiscal);
 			
 			return "Usuário removido com sucesso!";
 		}catch(SQLException e){

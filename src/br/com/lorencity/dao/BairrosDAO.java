@@ -67,7 +67,7 @@ public class BairrosDAO {
 		conn.close();
 	}
 	
-	public List<Bairro> consultarBairros() throws SQLException{
+	public List<Bairro> listarBairros() throws SQLException{
 		List<Bairro> listaBairros;
 		Bairro bairro;
 		
@@ -77,9 +77,9 @@ public class BairrosDAO {
 		ResultSet rs = stmt.executeQuery();
 
 		listaBairros = new ArrayList<Bairro>();
-		bairro = new Bairro();
 		
 		while(rs.next()){
+			bairro = new Bairro();
 			bairro.setNome(rs.getString("bairro"));
 			bairro.setId(rs.getInt("id_bairro"));
 			
@@ -111,5 +111,26 @@ public class BairrosDAO {
 		rs.close();
 		
 		return jsonArray;
+	}
+	
+	public Bairro consultarBairro(Bairro bairro) throws SQLException{
+		
+		String sql = "SELECT * FROM bairros WHERE id_bairro = "+bairro.getId()+";";
+		
+		PreparedStatement stmt = conn.prepareStatement(sql);
+		ResultSet rs = stmt.executeQuery();
+
+		bairro = new Bairro();
+		
+		rs.next();
+		
+		bairro.setNome(rs.getString("bairro"));
+		bairro.setId(rs.getInt("id_bairro"));
+
+		stmt.close();
+		conn.close();
+		rs.close();
+		
+		return bairro;
 	}
 }
