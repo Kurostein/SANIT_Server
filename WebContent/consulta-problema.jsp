@@ -7,7 +7,7 @@
     <head>
 	  	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 
-	  	<title>Bairros Cadastrados</title>
+	  	<title>Tipos de Problemas Cadastrados</title>
 
 		<link rel="stylesheet" href="css/border.css">
 	  	<link rel="stylesheet" href="css/page-layout.css">
@@ -30,16 +30,20 @@
 		    	<div class="div_size">
 				<form>
 					<fieldset class="field_size" readonly>
-						<legend>Bairros Cadastrados</legend>
-						<table summary="Tabela de bairros cadastrados.">
+						<legend>Tipos de Problemas Cadastrados</legend>
+						<table summary="Tabela de problemas cadastrados.">
 							<tr>
-								<th id="colBairro">Bairro</th>
+								<th id="colProblema">Problema</th>
+								<th id="colPrioridade">Prioridade</th>
 							</tr>
 
-							<c:forEach var="bairro" items="${listaBairros}">
+							<c:forEach var="problema" items="${listaProblemas}">
 			    				<tr>
-									<td headers="colBairro">
-										<p class="table_border">${bairro.nome}</p>
+									<td headers="colProblema">
+										<p class="table_border">${problema.problema}</p>
+									</td>
+									<td headers="colPrioridade">
+										<p class="table_border">${problema.prioridade}</p>
 									</td>
 								</tr>
 			    			</c:forEach>

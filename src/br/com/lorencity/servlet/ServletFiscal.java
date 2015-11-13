@@ -79,7 +79,7 @@ public class ServletFiscal extends HttpServlet {
 				listaFiscais = boFiscal.listarFiscais();
 				
 				request.setAttribute("listaFiscais", listaFiscais);
-				rd = request.getRequestDispatcher("form-fiscal.jsp");
+				rd = request.getRequestDispatcher("consulta-fiscal.jsp");
 				rd.forward(request, response);
 				break;
 			default:

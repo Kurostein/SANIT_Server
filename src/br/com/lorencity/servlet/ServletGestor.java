@@ -4,16 +4,17 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.json.JSONObject;
-
+import br.com.lorencity.bo.BoBairros;
 import br.com.lorencity.bo.BoGestor;
-import br.com.lorencity.modelo.Endereco;
+import br.com.lorencity.bo.BoProblemas;
+import br.com.lorencity.modelo.Bairro;
 import br.com.lorencity.modelo.Estatistica;
 import br.com.lorencity.modelo.Ocorrencia;
 import br.com.lorencity.modelo.TipoDeProblema;
@@ -45,63 +46,94 @@ public class ServletGestor extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		String pagSelecionada = request.getParameter("pagSelecionada");
 		String action = request.getParameter("action");
 		String responseString = null;
 		
-		List<Ocorrencia> lista;
+		List<Ocorrencia> listaOcorrencias;
 		List<Estatistica> listaEstatisticas;
+		List<Bairro> listaBairros;
+		List<TipoDeProblema> listaProblemas;
+		
+		RequestDispatcher rd;
 		
 		BoGestor boGestor;
+		BoBairros boBairros;
+		BoProblemas boProblemas;
 		
-		try{
-			boGestor = new BoGestor();
+		if(pagSelecionada.equals("pagConsultar")){
+			boBairros = new BoBairros();
+			boProblemas = new BoProblemas();
 			
-			switch (action) {
-			case "listarOcorrencias":
-				lista = new ArrayList<Ocorrencia>();
-				lista = boGestor.listarOcorrencias();
+			listaBairros = boBairros.listarBairros();
+			listaProblemas = boProblemas.listarProblemas();
+
+			request.setAttribute("listaBairros", listaBairros);
+			request.setAttribute("listaProblemas", listaProblemas);
+			rd = request.getRequestDispatcher("Consultas.jsp");
+			rd.forward(request, response);
+		}else if(action != null && !action.equals("")){	
+			try{
+				boGestor = new BoGestor();
 				
-				request.setAttribute("listaOcorrencias", lista);
-				break;
-			case "consultarOcorrenciasPorBairro":
-				Endereco endereco = new Endereco();
-				endereco.setBairro(request.getParameter("bairro"));
+				switch (action) {
+				case "listarOcorrencias":
+					listaOcorrencias = new ArrayList<Ocorrencia>();
+					listaOcorrencias = boGestor.listarOcorrencias();
+					
+					request.setAttribute("listaOcorrencias", listaOcorrencias);
+					rd = request.getRequestDispatcher("Consultas.jsp");
+					rd.forward(request, response);
+					break;
+				case "consultarOcorrenciasPorBairro":
+					Bairro bairro = new Bairro();
+					bairro.setNome(request.getParameter("bairro"));
+					
+					listaOcorrencias = new ArrayList<Ocorrencia>();				
+					listaOcorrencias = boGestor.consultarOcorrenciasPorBairro(bairro);
+					
+					request.setAttribute("listaOcorrencias", listaOcorrencias);
+					rd = request.getRequestDispatcher("Consultas.jsp");
+					rd.forward(request, response);
+					break;
+				case "consultarOcorrenciasPorProblema":
+					TipoDeProblema problema = new TipoDeProblema();
+					problema.setProblema(request.getParameter("problema"));
+					
+					listaOcorrencias = new ArrayList<Ocorrencia>();			
+					listaOcorrencias = boGestor.consultarOcorrenciasPorProblema(problema);
+					
+					request.setAttribute("listaOcorrencias", listaOcorrencias);
+					rd = request.getRequestDispatcher("Consultas.jsp");
+					rd.forward(request, response);
+					break;
+				case "consultarNumeroDeOcorrenciasPorProblema":
+					listaEstatisticas = boGestor.consultarNumeroDeOcorrenciasPorProblema();
+					
+					request.setAttribute("listaEstatisticas", listaEstatisticas);
+					rd = request.getRequestDispatcher("Consultas.jsp");
+					rd.forward(request, response);
+					break;
+				case "consultarNumeroDeOcorrenciasPorBairro":
+					listaEstatisticas = boGestor.consultarNumeroDeOcorrenciasPorBairro();
+					
+					request.setAttribute("listaEstatisticas", listaEstatisticas);
+					rd = request.getRequestDispatcher("Consultas.jsp");
+					rd.forward(request, response);
+					break;
+				default:
+					responseString = "Filter Error";
+					break;
+				}	
+			}catch(RuntimeException e){
+				responseString = e.getMessage();
+				e.printStackTrace();
 				
-				lista = new ArrayList<Ocorrencia>();				
-				lista = boGestor.consultarOcorrenciasPorBairro(endereco);
-				
-				request.setAttribute("listaOcorrenciasPorBairro", lista);
-				break;
-			case "consultarOcorrenciasPorProblema":
-				TipoDeProblema problema = new TipoDeProblema();
-				problema.setProblema(request.getParameter("problema"));
-				
-				lista = new ArrayList<Ocorrencia>();			
-				lista = boGestor.consultarOcorrenciasPorProblema(problema);
-				
-				request.setAttribute("listaOcorrenciasPorProblema", lista);
-				break;
-			case "consultarNumeroDeOcorrenciasPorProblema":
-				listaEstatisticas = boGestor.consultarNumeroDeOcorrenciasPorProblema();
-				
-				request.setAttribute("listaEstatisticas", listaEstatisticas);
-				break;
-			case "consultarNumeroDeOcorrenciasPorBairro":
-				listaEstatisticas = boGestor.consultarNumeroDeOcorrenciasPorBairro();
-				
-				request.setAttribute("listaEstatisticas", listaEstatisticas);
-				break;
-			default:
-				responseString = "Filter Error";
-				break;
+				request.setAttribute("responseMessage", responseString);
+				rd = request.getRequestDispatcher("Consultas.jsp");
+				rd.forward(request, response);
 			}
-			
-		}catch(RuntimeException e){
-			responseString = e.getMessage();
-			e.printStackTrace();
 		}
-		
-		//retorno para a página e setar atributos (método com requestDispatcher)
 		System.out.println("Resposta enviada com sucesso.");
 	}
 

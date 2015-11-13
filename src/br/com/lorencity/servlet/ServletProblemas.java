@@ -82,7 +82,7 @@ public class ServletProblemas extends HttpServlet {
 				listaProblemas = boProblemas.listarProblemas();
 				
 				request.setAttribute("listaProblemas", listaProblemas);
-				rd = request.getRequestDispatcher("form-problema.jsp");
+				rd = request.getRequestDispatcher("consulta-problema.jsp");
 				rd.forward(request, response);
 				break;
 			default:

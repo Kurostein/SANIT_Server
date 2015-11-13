@@ -6,8 +6,9 @@ import java.util.List;
 import javax.naming.NamingException;
 
 import br.com.lorencity.dao.GestorDAO;
-import br.com.lorencity.modelo.Endereco;
+import br.com.lorencity.modelo.Bairro;
 import br.com.lorencity.modelo.Estatistica;
+import br.com.lorencity.modelo.Gestor;
 import br.com.lorencity.modelo.Ocorrencia;
 import br.com.lorencity.modelo.TipoDeProblema;
 
@@ -35,13 +36,13 @@ public class BoGestor {
 		return lista;
 	}
 	
-	public List<Ocorrencia> consultarOcorrenciasPorBairro(Endereco endereco) throws RuntimeException{
+	public List<Ocorrencia> consultarOcorrenciasPorBairro(Bairro bairro) throws RuntimeException{
 		GestorDAO gestorDAO;
 		List<Ocorrencia> lista = null;
 		
 		try {
 			gestorDAO = new GestorDAO();
-			lista = gestorDAO.consultarOcorrenciasPorBairro(endereco);
+			lista = gestorDAO.consultarOcorrenciasPorBairro(bairro);
 		} catch (NamingException e) {
 			System.err.println("Problema na conexão com o banco.");
 			throw new RuntimeException("Problema na conexão com o banco.", e);
@@ -105,5 +106,33 @@ public class BoGestor {
 		}
 		
 		return lista;
+	}
+	
+	public boolean checkLoginGestor(Gestor gestor){
+		Gestor gestorBanco;
+		GestorDAO gestorDAO;
+		
+		try{
+			gestorDAO = new GestorDAO();
+			gestorBanco = gestorDAO.consultarLoginGestor(gestor);
+			
+			if(gestor.getMatricula() == gestorBanco.getMatricula()){
+				if(gestor.getSenha().equals(gestorBanco.getSenha())){
+					return true;
+				}else{
+					return false;
+				}
+			}else{
+				return false;
+			}
+		} catch (NamingException e) {
+			System.err.println("Problema na conexão com o banco.");
+			e.printStackTrace();
+			throw new RuntimeException("Problema na conexão com o banco.", e);
+		} catch (SQLException e) {
+			System.err.println("Problema na consulta do banco.");
+			e.printStackTrace();
+			throw new RuntimeException("Problema na consulta do banco.", e);
+		}
 	}
 }

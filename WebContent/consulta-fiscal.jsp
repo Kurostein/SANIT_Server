@@ -7,7 +7,7 @@
     <head>
 	  	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 
-	  	<title>Bairros Cadastrados</title>
+	  	<title>Fiscais Cadastrados</title>
 
 		<link rel="stylesheet" href="css/border.css">
 	  	<link rel="stylesheet" href="css/page-layout.css">
@@ -30,16 +30,24 @@
 		    	<div class="div_size">
 				<form>
 					<fieldset class="field_size" readonly>
-						<legend>Bairros Cadastrados</legend>
-						<table summary="Tabela de bairros cadastrados.">
+						<legend>Fiscais Cadastrados</legend>
+						<table summary="Tabela de fiscais cadastrados.">
 							<tr>
-								<th id="colBairro">Bairro</th>
+								<th id="colMatricula">Matricula</th>
+								<th id="colNome">Nome</th>
+								<th id="colCPF">CPF</th>
 							</tr>
 
-							<c:forEach var="bairro" items="${listaBairros}">
+							<c:forEach var="fiscal" items="${listaFiscais}">
 			    				<tr>
-									<td headers="colBairro">
-										<p class="table_border">${bairro.nome}</p>
+									<td headers="colMatricula">
+										<p class="table_border">${fiscal.matricula}</p>
+									</td>
+									<td headers="colNome">
+										<p class="table_border">${fiscal.nome}</p>
+									</td>
+									<td headers="colCPF">
+										<p class="table_border">${fiscal.cpf}</p>
 									</td>
 								</tr>
 			    			</c:forEach>

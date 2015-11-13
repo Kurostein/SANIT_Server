@@ -1,19 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<!DOCTYPE html>
-<html lang="pt-br">
-
-    <head>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
 	  	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 
-	  	<title>Bairros Cadastrados</title>
+	  	<title>Consultas</title>
 
+	  	<link rel="stylesheet" href="css/style.css">
 		<link rel="stylesheet" href="css/border.css">
 	  	<link rel="stylesheet" href="css/page-layout.css">
 	  	<link rel="stylesheet" href="css/buttons.css">
-	  	<link rel="stylesheet" href="css/style.css">
-	  	<script type="text/javascript" src="js/searchFunction.js"></script>
+	  	<script type="text/javascript" src="js/consulta.js"></script>
     	<script type="text/javascript" src="js/redirectFunction.js"></script>
     </head>
 
@@ -25,30 +23,18 @@
 					<img src="imagens/oie_transparent(3).png" alt="SANIT Logo">
 				</header>
 			</div>
-
+			<div class="menuConsultas">
+				<ul class="ulConsultas">
+					<li><a href="#" onclick="todasOcorrencias()">TODAS AS OCORRENCIAS</a></li>
+					<li><a href="#" onclick="ocorrenciaBairro()">OCORRENCIAS POR BAIRRO</a></li>
+					<li><a href="#" onclick="ocorrenciaProblema()">OCORRENCIAS POR TIPO PROBLEMA</a></li>
+					<li><a href="#" onclick="numeroProblema()">NUMERO OCORRENCIA POR PROBLEMA</a></li>
+					<li><a href="#" onclick="numeroBairro()">NUMERO OCORRENCIA POR BAIRRO</a></li>
+				</ul>
+			</div>
+			<div id="tabela">
+			</div>
 			<div>
-		    	<div class="div_size">
-				<form>
-					<fieldset class="field_size" readonly>
-						<legend>Bairros Cadastrados</legend>
-						<table summary="Tabela de bairros cadastrados.">
-							<tr>
-								<th id="colBairro">Bairro</th>
-							</tr>
-
-							<c:forEach var="bairro" items="${listaBairros}">
-			    				<tr>
-									<td headers="colBairro">
-										<p class="table_border">${bairro.nome}</p>
-									</td>
-								</tr>
-			    			</c:forEach>
-							
-						</table>
-					</fieldset>
-				</form>
-			</div>	
-
 		  		<div class="button-box">
 					<button class="button" type="button" value="redirect" onClick="redirectMenu()">Voltar ao Menu</button>  
 				</div>
@@ -63,5 +49,4 @@
 	  </div>
 
     </body>
-
 </html>

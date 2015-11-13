@@ -103,7 +103,13 @@
 			<form id="pagConsultas" method="post" action="ServletGestor">
 				<input type="hidden" name="pagSelecionada" value="pagConsultar" />
 			</form>
-			<a href="#">CONSULTAS</a>
+			<a href="#" onClick="redirectConsultas()">CONSULTAS</a>
+		</li>
+		<li>
+			<form id="logout" method="post" action="ServletLogin">
+				<input type="hidden" name="action" value="logout" />
+			</form>
+			<a href="#" onClick="logout()">SAIR</a>
 		</li>
 	</ul>
  </nav>	

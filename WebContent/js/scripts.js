@@ -80,7 +80,7 @@ function validarLogin() {
 	var postPass = document.getElementById("senha").value;
 	
 	if (postID == null || postID == '') {
-		alert('Digite um usuário!');
+		alert('Digite um usuario!');
 	}else if (postPass == null || postPass == ''){
 		alert('Digite uma senha!')
 	}else{

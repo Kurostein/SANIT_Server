@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,9 +13,11 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
+import br.com.lorencity.modelo.Bairro;
 import br.com.lorencity.modelo.Endereco;
 import br.com.lorencity.modelo.Estatistica;
 import br.com.lorencity.modelo.Fiscal;
+import br.com.lorencity.modelo.Gestor;
 import br.com.lorencity.modelo.Ocorrencia;
 import br.com.lorencity.modelo.TipoDeProblema;
 
@@ -38,8 +41,8 @@ public class GestorDAO {
 		Fiscal fiscal;
 		TipoDeProblema problema;
 		
-		String sql = "SELECT O.logradouro, O.numero, B.bairro, O.cep, P.tipo_problema, "
-				+ "P.prioridade"
+		String sql = "SELECT O.logradouro, O.numero, B.bairro, O.complemento, O.cep, "
+				+ "P.tipo_problema, P.prioridade"
 				+ "FROM ocorrencias O, bairros B, problemas P"
 				+ "WHERE O.id_bairro = B.id_bairro"
 				+ "AND O.id_problema = P.id_problema"
@@ -52,7 +55,7 @@ public class GestorDAO {
 		
 		while(rs.next()){
 			fiscal = new Fiscal();
-			fiscal.setMatricula(Integer.parseInt(rs.getString("matricula")));
+			//fiscal.setMatricula(Integer.parseInt(rs.getString("matricula")));
 			
 			ocorrencia = new Ocorrencia();
 			ocorrencia.setEndereco(Endereco.preencherEndereco(rs));
@@ -75,16 +78,16 @@ public class GestorDAO {
 	}
 	
 	//Retorna todas as ocorrências do bairro informado.
-	public List<Ocorrencia> consultarOcorrenciasPorBairro(Endereco endereco) throws SQLException{
+	public List<Ocorrencia> consultarOcorrenciasPorBairro(Bairro bairro) throws SQLException{
 		List<Ocorrencia> listaOcorrencias;
 		Ocorrencia ocorrencia;
 		Fiscal fiscal;
 		TipoDeProblema problema;
 		
-		String sql = "SELECT O.logradouro, O.numero, B.bairro, O.cep, P.tipo_problema, "
-				+ "P.prioridade"
+		String sql = "SELECT O.logradouro, O.numero, B.bairro, O.complemento, O.cep, "
+				+ "P.tipo_problema, P.prioridade"
 				+ "FROM ocorrencias O, bairros B, problemas P"
-				+ "WHERE B.bairro = '"+endereco.getBairro()+"'"
+				+ "WHERE B.bairro = '"+bairro.getNome()+"'"
 				+ "AND O.id_bairro = B.id_bairro"
 				+ "AND O.id_problema = P.id_problema"
 				+ "ORDER BY B.bairro;";
@@ -96,7 +99,7 @@ public class GestorDAO {
 		
 		while(rs.next()){
 			fiscal = new Fiscal();
-			fiscal.setMatricula(Integer.parseInt(rs.getString("matricula")));
+			//fiscal.setMatricula(Integer.parseInt(rs.getString("matricula")));
 			
 			ocorrencia = new Ocorrencia();
 			ocorrencia.setEndereco(Endereco.preencherEndereco(rs));
@@ -124,8 +127,8 @@ public class GestorDAO {
 		Ocorrencia ocorrencia;
 		Fiscal fiscal;
 		
-		String sql = "SELECT O.logradouro, O.numero, B.bairro, O.cep, P.tipo_problema, "
-				+ "P.prioridade"
+		String sql = "SELECT O.logradouro, O.numero, B.bairro, O.complemento, O.cep, "
+				+ "P.tipo_problema, P.prioridade"
 				+ "FROM ocorrencias O, bairros B, problemas P"
 				+ "WHERE P.tipo_problema = '"+problema.getProblema()+"'"
 				+ "AND O.id_bairro = B.id_bairro"
@@ -139,7 +142,7 @@ public class GestorDAO {
 		
 		while(rs.next()){
 			fiscal = new Fiscal();
-			fiscal.setMatricula(Integer.parseInt(rs.getString("matricula")));
+			//fiscal.setMatricula(Integer.parseInt(rs.getString("matricula")));
 			
 			ocorrencia = new Ocorrencia();
 			ocorrencia.setEndereco(Endereco.preencherEndereco(rs));
@@ -221,5 +224,27 @@ public class GestorDAO {
 		rs.close();
 		
 		return lista;
+	}
+	
+	public Gestor consultarLoginGestor(Gestor gestor) throws SQLException{
+		String sql = "SELECT matricula, senha FROM gestores "
+				+ "WHERE matricula = "+gestor.getMatricula()+";";
+		
+		Statement stmt = conn.createStatement();
+		
+		ResultSet rs;
+		rs = stmt.executeQuery(sql);
+		
+		if(rs.first()){
+			gestor = new Gestor();
+			gestor.setMatricula(rs.getInt("matricula"));
+			gestor.setSenha(rs.getString("senha"));
+		}else{
+			gestor = new Gestor();
+			gestor.setMatricula(-1);
+			gestor.setSenha(null);
+		}
+		
+		return gestor;
 	}
 }

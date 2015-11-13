@@ -60,6 +60,12 @@ div.formulario{
 	position:absolute;
 }
 
+div#tabela{
+	position:absolute;
+	left:700px;
+	top:220px;
+}
+
 img.terra{
 	width:100%;
     height:100%;
@@ -78,7 +84,7 @@ input.senha{
 	margin:20px 0px 20px;
 	border-style:ridge;
 	border-width: 5px;
-	border-radius:30px;
+	border-radius:5px;
 }
 
 input.nome{
@@ -86,7 +92,7 @@ input.nome{
 	margin:20px 0px 20px;
 	border-style:ridge;
 	border-width: 5px;
-	border-radius:30px;
+	border-radius:5px;
 	-moz-border-radius:5px;
     -webkit-border-radius:5px;
 }
@@ -167,4 +173,28 @@ ul#visualizacao li ul li a{
 
 ul#visualizacao li:hover ul{
 	display:block;
+}
+
+ul.ulConsultas{
+	list-style:none;
+}
+
+ul.ulConsultas li{
+	position:relative;
+	padding:10px;
+}
+
+ul.ulConsultas li a{
+	background-color: #66FFCC;
+    color: black;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 4px 4px 0 0;
+    box-shadow:5px 5px 3px black;
+    display:inline-table;
+    width:150px; 
+}
+
+ul.ulConsultas li a:hover{
+	background-color: #D6FFF1;
 }

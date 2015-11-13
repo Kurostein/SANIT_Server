@@ -57,3 +57,7 @@ function redirectConsultarFiscal(){
 function redirectConsultas(){
 	document.getElementById("pagConsultas").submit();
 }
+
+function logout(){
+      document.getElementById("logout").submit();
+}

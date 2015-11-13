@@ -25,7 +25,6 @@ public class ImagemDAO {
 	public void inserir(String imagePath) throws SQLException{
 		String sql = "INSERT INTO anexos (caminho_anexo) VALUES ('"+imagePath+"');";
 		
-		System.out.println(sql);
 		Statement stmt = conn.createStatement();
 		stmt.execute(sql);
 		System.out.println("Dados inseridos no banco!");
